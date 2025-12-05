@@ -1,0 +1,186 @@
+local Translations = {
+    ["Toggle"] = "切换",
+    ["Lock"] = "锁定",
+    ["Main"] = "主菜单 翻译by法兰西入HEADLESS",
+    ["Info"] = "信息",
+    ["UI Settings"] = "界面设置",
+    ["Money"] = "货币",
+    ["Auto Crate"] = "自动开箱子",
+    ["Auto Buy"] = "自动购买",
+    ["Character"] = "角色",
+    ["Speed Hack"] = "速度修改",
+    ["CFrame Multiplier"] = "坐标帧乘数",
+    ["Fly"] = "飞行",
+    ["Fly Speed"] = "飞行速度",
+    ["Combat"] = "战斗",
+    ["Silent Aim"] = "静默瞄准",
+    ["TeamCheck"] = "队伍检测",
+    ["Target Part"] = "目标部位",
+    ["Head"] = "头部",
+    ["Fov Enabled"] = "视野启用",
+    ["Fov Changer"] = "视野调整",
+    ["NoClip"] = "穿墙",
+    ["No Fall Damage"] = "无坠落伤害",
+    ["Full Bright"] = "全亮",
+    ["FPS Boost"] = "帧率提升",
+    ["Kill Aura"] = "杀戮光环",
+    ["Ignore Own Vehicle"] = "忽略己方载具",
+    ["Target Helicopter"] = "锁定直升机",
+    ["Target Vehicles"] = "锁定载具",
+    ["Target Planes"] = "锁定飞机",
+    ["Target GunShip"] = "锁定武装直升机",
+    ["Target Tank"] = "锁定坦克",
+    ["Target Boats"] = "锁定船只",
+    ["Target Drones"] = "锁定无人机",
+    ["如果RPG无法发射，重新加入游戏（可能也无法命中）"] = "如果RPG无法发射，重新加入游戏（可能也无法命中）",
+    ["Nuke Aura"] = "核弹光环",
+    ["Aura Range"] = "光环范围",
+    ["Nuke Shield"] = "核弹护盾",
+    ["Rocket MultiShot"] = "火箭多发",
+    ["Rocket Count"] = "火箭数量",
+    ["Get RPG"] = "获取RPG",
+    ["如果ESP失效或工作异常，关闭并重启脚本（不要更改窗口）"] = "如果ESP失效或工作异常，关闭并重启脚本（不要更改窗口）",
+    ["Enable ESP"] = "启用ESP",
+    ["Box"] = "方框",
+    ["Tracers"] = "追踪线",
+    ["Name"] = "名称",
+    ["Health Bar"] = "血条",
+    ["Refresh ESP"] = "刷新ESP",
+    ["Community"] = "社区",
+    ["你可以在Discord和Telegram找到我们Kagu Hub脚本的社区，如果你遇到错误，我可以在那里帮助你。"] = "你可以在Discord和Telegram找到我们Kagu Hub脚本的社区，如果你遇到错误，我可以在那里帮助你。",
+    ["Telegram Channel"] = "电报频道",
+    ["Discord Server"] = "Discord服务器",
+    ["Menu"] = "菜单",
+    ["Open Keybind Menu"] = "打开按键绑定菜单",
+    ["Custom Cursor"] = "自定义光标",
+    ["Notification Side"] = "通知位置",
+    ["Right"] = "右侧",
+    ["DPI Scale"] = "DPI缩放",
+    ["Menu bind"] = "菜单按键",
+    ["RightShift"] = "右Shift",
+    ["Unload"] = "卸载",
+    ["Themes"] = "主题",
+    ["Background color"] = "背景颜色",
+    ["Main color"] = "主色调",
+    ["Accent color"] = "强调色",
+    ["Outline color"] = "轮廓色",
+    ["Font color"] = "字体颜色",
+    ["Font Face"] = "字体样式",
+    ["Code"] = "代码体",
+    ["Theme list"] = "主题列表",
+    ["Default"] = "默认",
+    ["Set as default"] = "设为默认",
+    ["Custom theme name"] = "自定义主题名称",
+    ["Create theme"] = "创建主题",
+    ["Custom themes"] = "自定义主题",
+    ["Load theme"] = "加载主题",
+    ["Overwrite theme"] = "覆盖主题",
+    ["Delete theme"] = "删除主题",
+    ["Refresh list"] = "刷新列表",
+    ["Reset default"] = "重置默认",
+    ["Configuration"] = "配置",
+    ["Config name"] = "配置名称",
+    ["Create config"] = "创建配置",
+    ["Config list"] = "配置列表",
+    ["Load config"] = "加载配置",
+    ["Overwrite config"] = "覆盖配置",
+    ["Delete config"] = "删除配置",
+    ["Set as autoload"] = "设为自动加载",
+    ["Reset autoload"] = "重置自动加载",
+    ["Current autoload config: none"] = "当前自动加载配置：无",
+    ["(Airstrikes) War Tycoon: v1.3.0"] = "（空袭）战争大亨：v1.3.0"
+}
+
+local function translateText(text)
+    if not text or type(text) ~= "string" then return text end
+    if Translations[text] then return Translations[text] end
+    for en, cn in pairs(Translations) do
+        if text:find(en) then return text:gsub(en, cn) end
+    end
+    return text
+end
+
+local translatedElements = {}
+local originalTexts = {}
+
+local function safeTranslateElement(element)
+    if translatedElements[element] then return end
+    pcall(function()
+        if element:IsA("TextLabel") or element:IsA("TextButton") or element:IsA("TextBox") then
+            local currentText = element.Text
+            if currentText and currentText ~= "" then
+                if not originalTexts[element] then
+                    originalTexts[element] = currentText
+                end
+                local translatedText = translateText(currentText)
+                if translatedText ~= currentText then
+                    element.Text = translatedText
+                    translatedElements[element] = true
+                end
+            end
+        end
+    end)
+end
+
+local function setupSmartListener()
+    local function onTextPropertyChanged(element)
+        if translatedElements[element] then
+            local currentText = element.Text
+            local originalText = originalTexts[element]
+            if currentText == originalText or translateText(currentText) == currentText then
+                translatedElements[element] = nil
+                return
+            end
+            local translatedText = translateText(currentText)
+            if translatedText ~= currentText then
+                element.Text = translatedText
+            end
+        else
+            safeTranslateElement(element)
+        end
+    end
+
+    local function addSmartListener(parent)
+        parent.DescendantAdded:Connect(function(descendant)
+            task.wait(0.3)
+            safeTranslateElement(descendant)
+            if descendant:IsA("TextLabel") or descendant:IsA("TextButton") or descendant:IsA("TextBox") then
+                descendant:GetPropertyChangedSignal("Text"):Connect(function()
+                    task.wait(0.1)
+                    onTextPropertyChanged(descendant)
+                end)
+            end
+        end)
+    end
+    
+    pcall(addSmartListener, game:GetService("CoreGui"))
+    local player = game:GetService("Players").LocalPlayer
+    if player and player:FindFirstChild("PlayerGui") then
+        pcall(addSmartListener, player.PlayerGui)
+    end
+end
+
+local function delayedInitialTranslate()
+    task.wait(5)
+    for _, gui in ipairs(game:GetService("CoreGui"):GetDescendants()) do
+        safeTranslateElement(gui)
+    end
+    local player = game:GetService("Players").LocalPlayer
+    if player and player:FindFirstChild("PlayerGui") then
+        for _, gui in ipairs(player.PlayerGui:GetDescendants()) do
+            safeTranslateElement(gui)
+        end
+    end
+end
+
+task.wait(2)
+setupSmartListener()
+delayedInitialTranslate()
+
+local success, err = pcall(function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Kaguya11/KaguHubRework/refs/heads/main/Scripts/Loader.lua", true))("t.me/rbxscript_robot")
+end)
+
+if not success then
+    warn("加载失败:", err)
+end
