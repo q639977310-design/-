@@ -1,161 +1,162 @@
 local Translations = {
-    ["Main"] = "主界面 key：Boren456",
-    ["RED LIGHT"] = "红绿灯@法兰西入HEADLESS",
-    ["Teleport to End"] = "传送到终点",
-    ["Remove Injury"] = "移除受伤",
-    ["Auto Collect Bandage (detected)"] = "自动收集绷带（已检测）",
-    ["Shoot Marked Players"] = "射击被标记玩家（可能是守卫功能）",
-    ["Shoot Marked Players v2"] = "射击被标记的守卫v2",
-    ["HIDE & SEEK"] = "捉迷藏@法兰西入HEADLESS",
-    ["Auto Kill Hiders"] = "自动击杀躲藏者",
-    ["Auto Escape"] = "自动逃脱",
-    ["Delete Spike"] = "删除尖刺",
-    ["Spike Kill"] = "尖刺击杀",
-    ["Auto Dodge"] = "自动闪避",
-    ["ESP Players"] = "玩家透视",
-    ["DALGONA & LIGHTS"] = "椪糖与灯😋@法兰西入HEADLESS",
-    ["Free Lighter"] = "免费打火机",
-    ["Auto Dalgona"] = "自动玩椪糖游戏",
-    ["Safe place on Low Health"] = "低血量时到安全区",
-    ["TUG OF WAR"] = "拔河@法兰西入HEADLESS",
-    ["Auto Pull"] = "自动拉绳",
-    ["GLASS BRIDGE"] = "玻璃桥@法兰西入HEADLESS",
-    ["Anti Break"] = "防破碎",
-    ["Glass ESP"] = "玻璃透视",
-    ["Anti Fall (Glass Bridge)"] = "防坠落（玻璃桥）",
-    ["Anti Miss"] = "防失误",
-    ["GUARDS"] = "守卫@法兰西入HEADLESS",
-    ["Key ESP"] = "钥匙透视",
-    ["ESP Exit Doors"] = "出口门透视",
-    ["Auto Enroll Guards"] = "自动加入守卫",
-    ["Fire Rate Multiplier"] = "射速倍率（越小越快）",
-    ["Infinite Won"] = "持续won",
-    ["Always Headshot"] = "总是爆头",
-    ["Infinite Ammo"] = "无限弹药",
-    ["Rapid Fire"] = "快速射击",
-    ["JUMP ROPE"] = "跳绳@法兰西入HEADLESS",
-    ["Anti Hit"] = "防击中",
-    ["Auto Balance"] = "自动平衡",
-    ["Auto Jump"] = "自动跳跃",
-    ["Delete Rope"] = "删除绳子",
-    ["Freeze Rope"] = "冻结绳子",
-    ["Anti Fall (Jump Rope)"] = "防坠落（跳绳）",
-    ["HALLOWEEN"] = "万圣节@法兰西入HEADLESS",
-    ["Candy ESP"] = "糖果透视",
-    ["Door ESP"] = "门透视",
-    ["Auto Collect Candy"] = "自动收集糖果",
-    ["REBEL"] = "反叛者@法兰西入HEADLESS",
-    ["Aimbot Guards"] = "守卫自瞄",
-    ["ESP Guards"] = "守卫透视",
-    ["Instant Rebel"] = "立即反叛",
-    ["Instant Rebel v2"] = "立即反叛二代",
-    ["OTHERS"] = "其他@法兰西入HEADLESS",
-    ["Unlock Dash"] = "解锁冲刺",
-    ["Phantom Step"] = "幻影步",
-    ["Revive"] = "复活",
-    ["Auto QTE V2"] = "自动快速反应事件二代",
-    ["Faster Speed"] = "更快速度",
-    ["Fov Booster"] = "视野增强",
-    ["AntiLag"] = "防卡顿",
-    ["Instant Interact"] = "立即交互",
-    ["FINAL"] = "天空鱿鱼@法兰西入HEADLESS",
-    ["Anti Fall"] = "防坠落",
-    ["Anti-Fall (Walls)"] = "防坠落（墙体）",
-    ["Auto Start"] = "自动开始",
-    ["Auto Grab Pole"] = "自动抓杆",
-    ["Anti Timer Damage"] = "防计时伤害",
-    ["Auto Kill"] = "自动击杀",
-    ["Touch Fling"] = "触摸抛甩（需解锁）",
-    ["Player Modifier"] = "玩家修改@法兰西入HEADLESS",
-    ["Walk Speed"] = "行走速度",
-    ["Jump Power"] = "跳跃力",
-    ["Gravity"] = "重力",
-    ["UI Width Multiplier"] = "UI宽度倍率",
-    ["Other Modifications"] = "其他修改@法兰西入HEADLESS(可能没翻译完懒得改）",
-    ["Anti-AFK"] = "防挂机",
-    ["Anti-Fling"] = "防抛甩",
-    ["Anti-Stun"] = "防眩晕",
-    ["Anti-Banana"] = "防香蕉（滑倒）"
+["Main"] = "主界面（by法兰西入HEADLESS)",
+["RED LIGHT"] = "红灯游戏",
+["Teleport to End"] = "传送到终点",
+["Remove Injury"] = "移除受伤状态",
+["Auto Collect Bandage (detected)"] = "自动收集绷带（已检测）",
+["Shoot Marked Players"] = "射击被标记的玩家",
+["Shoot Marked Players v2"] = "射击被标记的玩家二代",
+["HIDE & SEEK"] = "捉迷藏",
+["Auto Kill Hiders"] = "自动击杀躲藏者",
+["Auto Escape"] = "自动逃脱",
+["Delete Spike"] = "删除尖刺",
+["Spike Kill"] = "尖刺击杀",
+["Auto Dodge"] = "自动闪避",
+["ESP Players"] = "玩家透视",
+["DALGONA & LIGHTS"] = "扣糖饼与黑灯",
+["Free Lighter"] = "免费打火机",
+["Auto Dalgona"] = "自动玩成扣糖饼",
+["Safe place on Low Health"] = "低血量时到安全区",
+["TUG OF WAR"] = "拔河",
+["Auto Pull"] = "自动拉绳",
+["GLASS BRIDGE"] = "玻璃桥",
+["Anti Break"] = "防破碎",
+["Glass ESP"] = "玻璃透视",
+["Anti Fall (Glass Bridge)"] = "防坠落（玻璃桥）",
+["Anti Miss"] = "防失误",
+["GUARDS"] = "守卫",
+["Key ESP"] = "钥匙透视",
+["ESP Exit Doors"] = "出口门透视",
+["Auto Enroll Guards"] = "自动加入守卫",
+["Fire Rate Multiplier"] = "射速倍率",
+["Infinite Won"] = "无限钱（只限守卫）",
+["Always Headshot"] = "总是爆头",
+["Infinite Ammo"] = "无限弹药",
+["Rapid Fire"] = "快速射击",
+["JUMP ROPE"] = "跳绳",
+["Anti Hit"] = "防击中",
+["Auto Balance"] = "自动平衡",
+["Auto Jump"] = "自动跳跃",
+["Delete Rope"] = "删除绳子",
+["Freeze Rope"] = "冻结绳子",
+["Anti Fall (Jump Rope)"] = "防坠落（跳绳）",
+["HALLOWEEN"] = "万圣节",
+["Candy ESP"] = "糖果透视",
+["Door ESP"] = "门透视",
+["Auto Collect Candy"] = "自动收集糖果",
+["REBEL"] = "反叛者",
+["Aimbot Guards"] = "守卫自瞄",
+["ESP Guards"] = "守卫透视",
+["Instant Rebel"] = "立即反叛",
+["Instant Rebel v2"] = "立即反叛二代",
+["OTHERS"] = "其他",
+["Unlock Dash"] = "解锁冲刺",
+["Phantom Step"] = "幻影步",
+["Revive"] = "复活",
+["Auto QTE V2"] = "自动快速反应事件二代",
+["Faster Speed"] = "更快速度",
+["Fov Booster"] = "视野增强",
+["AntiLag"] = "防卡顿",
+["Instant Interact"] = "立即交互",
+["FINAL"] = "天空鱿鱼",
+["Anti-Fall (Walls)"] = "防坠落（墙体）",
+["Auto Start"] = "自动开始",
+["Auto Grab Pole"] = "自动抓杆",
+["Anti Timer Damage"] = "防计时伤害",
+["Auto Kill"] = "自动击杀",
+["Touch Fling"] = "触摸抛甩（需解锁）",
+["Player Modifier"] = "玩家修改",
+["Walk Speed"] = "行走速度",
+["Jump Power"] = "跳跃力",
+["Gravity"] = "重力",
+["UI Width Multiplier"] = "UI宽度倍率",
+["Other Modifications"] = "其他修改",
+["Anti-AFK"] = "防挂机",
+["Anti-Fling"] = "防抛甩",
+["Anti-Stun"] = "防眩晕",
+["Anti-Banana"] = "防香蕉（滑倒）"
 }
 
 local function translateText(text)
-    if not text or type(text) ~= "string" then return text end
-    if Translations[text] then return Translations[text] end
-    for en, cn in pairs(Translations) do
-        if text:find(en) then return text:gsub(en, cn) end
-    end
-    return text
+if not text or type(text) ~= "string" then return text end
+if Translations[text] then return Translations[text] end
+for en, cn in pairs(Translations) do
+if text:find(en) then return text:gsub(en, cn) end
+end
+return text
 end
 
 local translatedElements = {}
 local originalTexts = {}
 
 local function safeTranslateElement(element)
-    if translatedElements[element] then return end
-    pcall(function()
-        if element:IsA("TextLabel") or element:IsA("TextButton") or element:IsA("TextBox") then
-            local currentText = element.Text
-            if currentText and currentText ~= "" then
-                if not originalTexts[element] then
-                    originalTexts[element] = currentText
-                end
-                local translatedText = translateText(currentText)
-                if translatedText ~= currentText then
-                    element.Text = translatedText
-                    translatedElements[element] = true
-                end
-            end
-        end
-    end)
+if translatedElements[element] then return end
+pcall(function()
+if element:IsA("TextLabel") or element:IsA("TextButton") or element:IsA("TextBox") then
+local currentText = element.Text
+if currentText and currentText ~= "" then
+if not originalTexts[element] then
+originalTexts[element] = currentText
+end
+local translatedText = translateText(currentText)
+if translatedText ~= currentText then
+element.Text = translatedText
+translatedElements[element] = true
+end
+end
+end
+end)
 end
 
 local function setupSmartListener()
-    local function onTextPropertyChanged(element)
-        if translatedElements[element] then
-            local currentText = element.Text
-            local originalText = originalTexts[element]
-            if currentText == originalText or translateText(currentText) == currentText then
-                translatedElements[element] = nil
-                return
-            end
-            local translatedText = translateText(currentText)
-            if translatedText ~= currentText then
-                element.Text = translatedText
-            end
-        else
-            safeTranslateElement(element)
-        end
-    end
-    local function addSmartListener(parent)
-        parent.DescendantAdded:Connect(function(descendant)
-            task.wait(0.3)
-            safeTranslateElement(descendant)
-            if descendant:IsA("TextLabel") or descendant:IsA("TextButton") or descendant:IsA("TextBox") then
-                descendant:GetPropertyChangedSignal("Text"):Connect(function()
-                    task.wait(0.1)
-                    onTextPropertyChanged(descendant)
-                end)
-            end
-        end)
-    end
-    pcall(addSmartListener, game:GetService("CoreGui"))
-    local player = game:GetService("Players").LocalPlayer
-    if player and player:FindFirstChild("PlayerGui") then
-        pcall(addSmartListener, player.PlayerGui)
-    end
+local function onTextPropertyChanged(element)
+if translatedElements[element] then
+local currentText = element.Text
+local originalText = originalTexts[element]
+if currentText == originalText or translateText(currentText) == currentText then
+translatedElements[element] = nil
+return
+end
+local translatedText = translateText(currentText)
+if translatedText ~= currentText then
+element.Text = translatedText
+end
+else
+safeTranslateElement(element)
+end
+end
+
+local function addSmartListener(parent)
+parent.DescendantAdded:Connect(function(descendant)
+task.wait(0.3)
+safeTranslateElement(descendant)
+if descendant:IsA("TextLabel") or descendant:IsA("TextButton") or descendant:IsA("TextBox") then
+descendant:GetPropertyChangedSignal("Text"):Connect(function()
+task.wait(0.1)
+onTextPropertyChanged(descendant)
+end)
+end
+end)
+end
+
+pcall(addSmartListener, game:GetService("CoreGui"))
+local player = game:GetService("Players").LocalPlayer
+if player and player:FindFirstChild("PlayerGui") then
+pcall(addSmartListener, player.PlayerGui)
+end
 end
 
 local function delayedInitialTranslate()
-    task.wait(5)
-    for _, gui in ipairs(game:GetService("CoreGui"):GetDescendants()) do
-        safeTranslateElement(gui)
-    end
-    local player = game:GetService("Players").LocalPlayer
-    if player and player:FindFirstChild("PlayerGui") then
-        for _, gui in ipairs(player.PlayerGui:GetDescendants()) do
-            safeTranslateElement(gui)
-        end
-    end
+task.wait(5)
+for _, gui in ipairs(game:GetService("CoreGui"):GetDescendants()) do
+safeTranslateElement(gui)
+end
+local player = game:GetService("Players").LocalPlayer
+if player and player:FindFirstChild("PlayerGui") then
+for _, gui in ipairs(player.PlayerGui:GetDescendants()) do
+safeTranslateElement(gui)
+end
+end
 end
 
 task.wait(2)
@@ -163,9 +164,9 @@ setupSmartListener()
 delayedInitialTranslate()
 
 local success, err = pcall(function()
-loadstring(game:HttpGet("https://raw.githubusercontent.com/eikikrkr-ux/bypasok/refs/heads/main/ok"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Tax-Script/TaxHub/refs/heads/main/Unm"))()
 end)
 
 if not success then
-    warn("加载失败:", err)
+warn("加载失败:", err)
 end
