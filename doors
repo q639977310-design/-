@@ -1,0 +1,155 @@
+.local Translations = {
+    ["Information"] = "信息",
+    ["Update Info"] = "更新信息",
+    ["Copy Discord Invite"] = "复制Discord邀请链接      by法兰西入HEADLESS",
+    ["Social"] = "社交",
+    ["Copy link social media for follow!"] = "复制社交媒体链接以便关注",
+    ["Discord"] = "Discord",
+    ["Join our discord for more scripts!"] = "加入我们的Discord获取更多脚本",
+    ["Main"] = "主要功能",
+    ["Feature Auto"] = "自动功能",
+    ["Auto Everything (Aura)"] = "全自动（光环）",
+    ["Feature Visual"] = "视觉功能",
+    ["Full Bright"] = "全亮/亮度全开",
+    ["No Fog"] = "无雾",
+    ["Instant Prompt"] = "即时提示",
+    ["Inf Oxygen"] = "无限氧气",
+    ["Esp"] = "额外感知",
+    ["Essential Esp"] = "基础Esp",
+    ["Esp Gui"] = "Esp界面",
+    ["Esp HighLight"] = "Esp高亮",
+    ["Settings Esp"] = "Esp设置",
+    ["Esp Key / Lever"] = "Esp钥匙/拉杆",
+    ["Esp Door"] = "Esp门",
+    ["Esp Book"] = "Esp书本",
+    ["Esp Breaker"] = "Esp破坏者",
+    ["Esp Item"] = "Esp物品",
+    ["Esp Entity"] = "Esp实体",
+    ["Esp Hiding Spots"] = "Esp隐藏点",
+    ["Esp Player"] = "Esp玩家",
+    ["Settings Color"] = "颜色设置",
+    ["Color Gui"] = "界面颜色",
+    ["Color HighLight"] = "高亮颜色",
+    ["Text Size [Gui]"] = "界面文字大小",
+    ["Settings Text"] = "文字设置",
+    ["Esp Name"] = "Esp名称",
+    ["Esp Distance"] = "Esp距离",
+    ["Esp Health"] = "Esp生命值",
+    ["Anti"] = "防御/反制",
+    ["Feature Anti"] = "反制功能",
+    ["Anti Screech"] = "反Screech",
+    ["Auto Clutch Heart Win"] = "自动掌控心脏胜利",
+    ["Anti Halt"] = "反Halt",
+    ["Anti Eyes / Lookman"] = "反Eyes/Lookman",
+    ["Misc"] = "杂项",
+    ["Feature Notify"] = "通知功能",
+    ["Choose Entity"] = "选择实体",
+    ["Rush"] = "Rush",
+    ["Seek"] = "Seek",
+    ["Eyes"] = "Eyes",
+    ["Window"] = "Window",
+    ["LookMan"] = "LookMan",
+    ["Giggle"] = "Giggle",
+    ["GloombatSwarm"] = "GloombatSwarm",
+    ["Ambush"] = "Ambush",
+    ["Notification Entity"] = "实体通知",
+    ["Feature Code"] = "代码功能",
+    ["Auto Get Code Library"] = "自动获取代码库",
+    ["Hau/Haul"] = "Hau/Haul",
+    ["Hiding Transparency"] = "隐藏透明度",
+    ["Transparency Hiding"] = "透明隐藏",
+    ["Settings Player"] = "玩家设置",
+    ["Walkspeed / WalkSpeed"] = "行走速度"
+}
+
+local function translateText(text)
+    if not text or type(text) ~= "string" then return text end
+    if Translations[text] then return Translations[text] end
+    for en, cn in pairs(Translations) do
+        if text:find(en) then return text:gsub(en, cn) end
+    end
+    return text
+end
+
+local translatedElements = {}
+local originalTexts = {}
+
+local function safeTranslateElement(element)
+    if translatedElements[element] then return end
+    pcall(function()
+        if element:IsA("TextLabel") or element:IsA("TextButton") or element:IsA("TextBox") then
+            local currentText = element.Text
+            if currentText and currentText ~= "" then
+                if not originalTexts[element] then
+                    originalTexts[element] = currentText
+                end
+                local translatedText = translateText(currentText)
+                if translatedText ~= currentText then
+                    element.Text = translatedText
+                    translatedElements[element] = true
+                end
+            end
+        end
+    end)
+end
+
+local function setupSmartListener()
+    local function onTextPropertyChanged(element)
+        if translatedElements[element] then
+            local currentText = element.Text
+            local originalText = originalTexts[element]
+            if currentText == originalText or translateText(currentText) == currentText then
+                translatedElements[element] = nil
+                return
+            end
+            local translatedText = translateText(currentText)
+            if translatedText ~= currentText then
+                element.Text = translatedText
+            end
+        else
+            safeTranslateElement(element)
+        end
+    end
+    local function addSmartListener(parent)
+        parent.DescendantAdded:Connect(function(descendant)
+            task.wait(0.3)
+            safeTranslateElement(descendant)
+            if descendant:IsA("TextLabel") or descendant:IsA("TextButton") or descendant:IsA("TextBox") then
+                descendant:GetPropertyChangedSignal("Text"):Connect(function()
+                    task.wait(0.1)
+                    onTextPropertyChanged(descendant)
+                end)
+            end
+        end)
+    end
+    pcall(addSmartListener, game:GetService("CoreGui"))
+    local player = game:GetService("Players").LocalPlayer
+    if player and player:FindFirstChild("PlayerGui") then
+        pcall(addSmartListener, player.PlayerGui)
+    end
+end
+
+local function delayedInitialTranslate()
+    task.wait(5)
+    for _, gui in ipairs(game:GetService("CoreGui"):GetDescendants()) do
+        safeTranslateElement(gui)
+    end
+    local player = game:GetService("Players").LocalPlayer
+    if player and player:FindFirstChild("PlayerGui") then
+        for _, gui in ipairs(player.PlayerGui:GetDescendants()) do
+            safeTranslateElement(gui)
+        end
+    end
+end
+
+task.wait(2)
+setupSmartListener()
+delayedInitialTranslate()
+
+local success, err = pcall(function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/jokerbiel13/FourHub/refs/heads/main/Doors.lua",true))()
+end)
+
+if not success then
+    warn("加载失败:", err)
+end
