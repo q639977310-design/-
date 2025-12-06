@@ -1,0 +1,170 @@
+local Translations = {
+    ["Toggle"] = "切换",
+    ["Lock"] = "锁定",
+    ["RINGTA"] = "RINGTA",
+    ["Main"] = "主页面",
+    ["Visual"] = "视觉",
+    ["Brainrot Finder"] = "Brainrot查找器",
+    ["Credit"] = "致谢",
+    ["UI Settings"] = "UI设置",
+    ["Search"] = "搜索",
+    ["discord.gg/ringta"] = "discord.gg/ringta",
+    ["Main Features"] = "主要功能",
+    ["Desync/AntiHit"] = "不同步/反击中",
+    ["Steal Helper Gui"] = "偷窃辅助界面",
+    ["Antisteal (OP)"] = "反偷窃（强力）",
+    ["Random Features (DO NOT WORK WHILE STEALING)"] = "随机功能（偷窃时无法使用）",
+    ["Boost Speed"] = "加速",
+    ["Infinite Jump"] = "无限跳跃",
+    ["Anti Ragdoll"] = "反布娃娃效果",
+    ["ESP Features"] = "ESP功能",
+    ["Player ESP"] = "玩家ESP",
+    ["ESP Your Base"] = "你的基地ESP",
+    ["Visual Utilities"] = "视觉工具",
+    ["Esp Most Expensive Brainrot"] = "最贵Brainrot的ESP",
+    ["View Base Lock Timers"] = "查看基地锁定计时器",
+    ["去收"] = "Go collect",
+    ["现金!"] = "Cash!",
+    ["现金多:"] = "Cash amount:",
+    ["x1"] = "x1",
+    ["RINGTA Steal Helper"] = "RINGTA偷窃辅助",
+    ["Enable Semi Invisible"] = "启用半隐身",
+    ["Enable ESP Through Walls"] = "启用穿墙ESP",
+    ["RINGTA Desync"] = "RINGTA不同步",
+    ["Desync"] = "不同步",
+    ["Auto Laser"] = "自动激光",
+    ["Anti-Steal Enabled"] = "反偷窃已启用",
+    ["You will leave the game if someone enters your base."] = "如果有人进入你的基地，你将离开游戏。",
+    ["好友加成: +0%"] = "Friend Bonus: +0%",
+    ["Finder Features"] = "查找器功能",
+    ["PET FINDER"] = "宠物查找器",
+    ["How The Pet Finder Works"] = "宠物查找器的工作原理",
+    ["The way the pet finder works is by 3 roblox bots in 3 different servers and also IT TRACKS THE EVERY BRAINROT INSIDE OF THE SERVER OF THE PLAYER THAT EXECUTES THE SCRIPT. Which means IF YOU HAVE RARE BRAINROTS STORE 1ST IN ALT ACCOUNT THEN USE SCRIPT OR ELSE RISK OF STOLEN."] = "宠物查找器的工作方式是通过3个不同服务器中的3个Roblox机器人，并且它会追踪执行脚本的玩家所在服务器内的所有Brainrot。这意味着如果你有稀有的Brainrot，请先存到小号里再使用脚本，否则有被偷的风险。",
+    ["DM RINGTA IN DISCORD IF YOU HAVE ANY STEAL A BRAINROT CODE THAT WE CAN ADD INTO THIS UI WE WILL ADD CREDIT"] = "如果你有任何偷窃Brainrot的代码，在Discord上私信RINGTA，我们会将其添加到这个界面中，并为你署名致谢",
+    ["Credit & Discord"] = "致谢与Discord",
+    ["JOIN DISCORD SERVER"] = "加入Discord服务器",
+    ["PLEASE JOIN DISCORD SERVER"] = "请加入Discord服务器",
+    ["Alright guys join the RINGTA discord server if you haven't since that's where updates and everything happens and new scripts and you get to talk to cool people and have fun and yea."] = "好了各位，如果还没加入的话，加入RINGTA的Discord服务器吧，那里会发布更新和所有内容，还有新脚本，你还能和有趣的人聊天、玩得开心。",
+    ["Extra Code Info"] = "额外代码信息",
+    ["If you have any steal a Brainrot code like Instant Steal or something op that will be useful for this script DM me on Discord. We will give you credit and give you the role called contributor and also, if you want to make a YouTube video on this script and give me the YouTube video link, we will give you the premium rare brainrot which can find 10m+ brainrots."] = "如果你有任何偷窃Brainrot的代码，比如即时偷窃或其他强力的代码，对这个脚本有用的话，在Discord上私信我。我们会为你署名致谢，并给你“贡献者”的角色，另外，如果你想为这个脚本做一个YouTube视频并把链接发给我，我们会给你高级稀有Brainrot，能找到价值1000万以上的Brainrot。",
+    ["Menu"] = "菜单",
+    ["Open Keybind Menu"] = "打开按键绑定菜单",
+    ["Custom Cursor"] = "自定义光标",
+    ["Notification Side"] = "通知位置",
+    ["Right"] = "右侧",
+    ["DPI Scale"] = "DPI缩放",
+    ["100%"] = "100%",
+    ["Menu bind"] = "菜单绑定",
+    ["RightControl"] = "右Ctrl",
+    ["Unload"] = "卸载",
+    ["Configuration"] = "配置",
+    ["Config name"] = "配置名称",
+    ["Create config"] = "创建配置",
+    ["Config list"] = "配置列表",
+    ["Load config"] = "加载配置",
+    ["Overwrite config"] = "覆盖配置",
+    ["Delete config"] = "删除配置",
+    ["Refresh list"] = "刷新列表",
+    ["Themes"] = "主题",
+    ["Custom theme name"] = "自定义主题名称",
+    ["Create theme"] = "创建主题",
+    ["Custom themes"] = "自定义主题",
+    ["Load theme"] = "加载主题",
+    ["Overwrite theme"] = "覆盖主题",
+    ["Delete theme"] = "删除主题",
+    ["Set as default"] = "设为默认",
+    ["Reset default"] = "重置默认",
+    ["Set as autoload"] = "设为自动加载",
+    ["Reset autoload"] = "重置自动加载",
+    ["Current autoload config: none"] = "当前自动加载配置：无",
+    ["RINGTA JOINER"] = "RINGTA服务器加入器",
+    ["Search pets..."] = "搜索宠物...",
+    ["Refresh"] = "刷新",
+    ["ALL"] = "全部",
+    ["1M+ only"] = "仅100万+",
+    ["5M+ only"] = "仅500万+",
+    ["Zombie Tralala"] = "僵尸特拉拉拉",
+    ["$500K/s"] = "每秒50万美元",
+    ["Players: 7/8"] = "玩家数: 7/8",
+    ["8 min ago"] = "8分钟前",
+    ["Extinct Tralalero"] = "灭绝特拉拉莱罗",
+    ["$562.5K/s"] = "每秒56.25万美元",
+    ["Join Server"] = "加入服务器",
+    ["索引"] = "Index",
+    ["重生"] = "Respawn",
+    ["商店"] = "Shop",
+    ["好友"] = "Friend"
+}
+
+local function translateText(text)
+    if not text or type(text) ~= "string" then return text end
+    if Translations[text] then return Translations[text] end
+    for en, cn in pairs(Translations) do
+        if text:find(en) then return text:gsub(en, cn) end
+    end
+    return text
+end
+
+local translatedElements = {}
+local originalTexts = {}
+
+local function safeTranslateElement(element)
+    if translatedElements[element] then return end
+    pcall(function()
+        if element:IsA("TextLabel") or element:IsA("TextButton") or element:IsA("TextBox") then
+            local currentText = element.Text
+            if currentText and currentText ~= "" then
+                if not originalTexts[element] then
+                    originalTexts[element] = currentText
+                end
+                local translatedText = translateText(currentText)
+                if translatedText ~= currentText then
+                    element.Text = translatedText
+                    translatedElements[element] = true
+                end
+            end
+        end
+    end)
+end
+
+local function setupSmartListener()
+    local function onTextPropertyChanged(element)
+        if translatedElements[element] then
+            local currentText = element.Text
+            local originalText = originalTexts[element]
+            if currentText == originalText or translateText(currentText) == currentText then
+                translatedElements[element] = nil
+                return
+            end
+            local translatedText = translateText(currentText)
+            if translatedText ~= currentText then
+                element.Text = translatedText
+            end
+        else
+            safeTranslateElement(element)
+        end
+    end
+
+    local function addSmartListener(parent)
+        parent.DescendantAdded:Connect(function(descendant)
+            task.wait(0.1)
+            safeTranslateElement(descendant)
+            if descendant:IsA("TextLabel") or descendant:IsA("TextButton") or descendant:IsA("TextBox") then
+                descendant:GetPropertyChangedSignal("Text"):Connect(function()
+                    task.wait(0.1)
+                    onTextPropertyChanged(descendant)
+                end)
+            end
+        end)
+    end
+    
+    pcall(addSmartListener, game:GetService("CoreGui"))
+    local player = game:GetService("Players").LocalPlayer
+    if player and player:FindFirstChild("PlayerGui") then
+        pcall(addSmartListener, player.PlayerGui)
+    end
+end
+
+local function delayedInitialTranslate()
+    task.wait(5)
+    for _, gui in
