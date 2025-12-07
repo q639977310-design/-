@@ -1,0 +1,168 @@
+local Translations = {
+    ["Please wait a while!"] = "请稍等片刻！",
+    ["We are currently setting everything up for you"] = "我们正在为你准备一切",
+    ["Search for scripts.."] = "搜索脚本..",
+    ["UPLOAD"] = "上传",
+    ["DELETE"] = "删除",
+    ["EXECUTE"] = "执行",
+    ["Thank you for using Delta <3"] = "感谢使用 Delta <3",
+    ["Get Delta only at deltaexploits.gg!"] = "仅在 deltaexploits.gg 获取 Delta！",
+    ["TELEGRAM: t.me/deltadyn"] = "电报群: t.me/deltadyn（汉化by法兰西入HEADLESS)",
+    ["DISCORD: discord.gg/deltax"] = "Discord群: discord.gg/deltax",
+    ["ONLY deltaexploits.gg IS REAL!"] = "只有 deltaexploits.gg 是官方的！",
+    ["CLEAR"] = "清空",
+    ["EXECUTE CLIPBOARD"] = "执行剪贴板",
+    ["Network"] = "网络",
+    ["Client status information"] = "客户端状态信息",
+    ["Check out this script!"] = "查看此脚本！",
+    ["INFINITE YIELD"] = "iy指令",
+    ["an admin script dedicated to provide the necessities of exploiting."] = "一个专注于提供利用所需功能的管理员脚本。",
+    ["FPS"] = "帧率",
+    ["MS Ping"] = "毫秒延迟",
+    ["players"] = "玩家",
+    ["Search on scriptblox.com..."] = "在 scriptblox.com 上搜索...",
+    ["Select Your Option"] = "选择你的选项",
+    ["Choose whether to execute, open in a new tab, etc.."] = "选择执行、在新标签页打开等操作。",
+    ["EXECUTE SELECTED SCRIPT"] = "执行选中的脚本",
+    ["OPEN SCRIPT IN EDITOR"] = "在编辑器中打开脚本",
+    ["SAVE SELECTED SCRIPT"] = "保存选中的脚本",
+    ["COPY TO CLIPBOARD"] = "复制到剪贴板",
+    ["Enabled"] = "已启用",
+    ["Disabled"] = "已禁用",
+    ["All"] = "全部",
+    ["Search for options"] = "搜索选项",
+    ["Anti Scam"] = "防诈骗",
+    ["Enable protection for your Robux and in-game items."] = "为你的 Robux 和游戏内物品启用保护。",
+    ["Disable Robux"] = "禁用 Robux",
+    ["Block all ROBUX purchases making it impossible to lose ROBUX to scams"] = "阻止所有 ROBUX 购买，避免因诈骗损失 ROBUX",
+    ["Verify Teleports"] = "验证传送",
+    ["Only allow teleports to the same place id"] = "仅允许传送到相同的游戏ID",
+    ["Anti AFK"] = "防挂机",
+    ["Disable all idle timeout kicks from the source"] = "禁用所有因闲置超时导致的踢出",
+    ["Auto Close"] = "自动关闭",
+    ["Toggle X button requirement to close popups"] = "切换关闭弹窗是否需要点击X按钮",
+    ["Console"] = "控制台",
+    ["Toggle roblox console logs in the GUI"] = "在界面中显示/隐藏 Roblox 控制台日志",
+    ["Auto Execute"] = "自动执行",
+    ["Toggle auto-execution of scripts in the autoexec folder"] = "切换是否自动执行 autoexec 文件夹中的脚本",
+    ["Join Discord"] = "加入 Discord",
+    ["Copies our discord invite"] = "复制我们的 Discord 邀请链接",
+    ["CLICK HERE"] = "点击这里",
+    ["Rejoin"] = "重新加入",
+    ["Rejoins your current server"] = "重新加入当前服务器",
+    ["Small Server"] = "小型服务器",
+    ["Joins a server with a low playercount"] = "加入玩家数量少的服务器",
+    ["Serverhop"] = "服务器跳转",
+    ["Teleport to a new server"] = "传送到新服务器",
+    ["FPS Cap"] = "帧率限制",
+    ["Change the FPS cap for a smoother experience"] = "更改帧率限制以获得更流畅的体验",
+    ["60 FPS"] = "60帧率",
+    ["120 FPS"] = "120帧率",
+    ["Max FPS"] = "最大帧率",
+    ["Icon Size"] = "图标大小",
+    ["Change the floating Icon's size"] = "更改悬浮图标的大小",
+    ["Medium"] = "中等",
+    ["Icon Shape"] = "图标形状",
+    ["Change the floating Icon's shape"] = "更改悬浮图标的形状",
+    ["Squircle"] = "圆角方形",
+    ["Circle"] = "圆形",
+    ["Square"] = "方形",
+    ["Icon Color"] = "图标颜色",
+    ["Change the floating Icon's color"] = "更改悬浮图标的颜色",
+    ["Blue"] = "蓝色",
+    ["Green"] = "绿色",
+    ["Purple"] = "紫色",
+}
+
+local function translateText(text)
+    if not text or type(text) ~= "string" then return text end
+    if Translations[text] then return Translations[text] end
+    for en, cn in pairs(Translations) do
+        if text:find(en) then return text:gsub(en, cn) end
+    end
+    return text
+end
+
+local translatedElements = {}
+local originalTexts = {}
+
+local function safeTranslateElement(element)
+    if translatedElements[element] then return end
+    pcall(function()
+        if element:IsA("TextLabel") or element:IsA("TextButton") or element:IsA("TextBox") then
+            local currentText = element.Text
+            if currentText and currentText ~= "" then
+                if not originalTexts[element] then
+                    originalTexts[element] = currentText
+                end
+                local translatedText = translateText(currentText)
+                if translatedText ~= currentText then
+                    element.Text = translatedText
+                    translatedElements[element] = true
+                end
+            end
+        end
+    end)
+end
+
+local function setupSmartListener()
+    local function onTextPropertyChanged(element)
+        if translatedElements[element] then
+            local currentText = element.Text
+            local originalText = originalTexts[element]
+            if currentText == originalText or translateText(currentText) == currentText then
+                translatedElements[element] = nil
+                return
+            end
+            local translatedText = translateText(currentText)
+            if translatedText ~= currentText then
+                element.Text = translatedText
+            end
+        else
+            safeTranslateElement(element)
+        end
+    end
+
+    local function addSmartListener(parent)
+        parent.DescendantAdded:Connect(function(descendant)
+            task.wait(0.3)
+            safeTranslateElement(descendant)
+            if descendant:IsA("TextLabel") or descendant:IsA("TextButton") or descendant:IsA("TextBox") then
+                descendant:GetPropertyChangedSignal("Text"):Connect(function()
+                    task.wait(0.1)
+                    onTextPropertyChanged(descendant)
+                end)
+            end
+        end)
+    end
+    
+    pcall(addSmartListener, game:GetService("CoreGui"))
+    local player = game:GetService("Players").LocalPlayer
+    if player and player:FindFirstChild("PlayerGui") then
+        pcall(addSmartListener, player.PlayerGui)
+    end
+end
+
+local function delayedInitialTranslate()
+    task.wait(5)
+    for _, gui in ipairs(game:GetService("CoreGui"):GetDescendants()) do
+        safeTranslateElement(gui)
+    end
+    local player = game:GetService("Players").LocalPlayer
+    if player and player:FindFirstChild("PlayerGui") then
+        for _, gui in ipairs(player.PlayerGui:GetDescendants()) do
+            safeTranslateElement(gui)
+        end
+    end
+end
+
+task.wait(2)
+setupSmartListener()
+delayedInitialTranslate()
+
+local success, err = pcall(function()
+end)
+
+if not success then
+    warn("加载失败:", err)
+end
