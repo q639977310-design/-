@@ -1,0 +1,188 @@
+local Translations = {
+    ["Kill Aura"] = "杀戮光环",
+    ["GodMode"] = "无敌模式",
+    ["Chop Aura"] = "砍树光环",
+    ["Aura Radius"] = "光环半径",
+    ["Select Junk Items"] = "选择杂物",
+    ["Choose items to bring"] = "选择要获取的物品",
+    ["Bring Junk Items"] = "获取杂物",
+    ["bring junk"] = "获取杂物",
+    ["Select Fuel Items"] = "选择燃料物品",
+    ["Bring Fuel Items"] = "获取燃料物品",
+    ["Bring fuel"] = "获取燃料",
+    ["Select Food Items"] = "选择食物物品",
+    ["Bring Food items"] = "获取食物物品",
+    ["Select Medical Items"] = "选择医疗物品",
+    ["Bring Medical Items"] = "获取医疗物品",
+    ["Select Equipment Items"] = "选择装备物品",
+    ["Bring Equipment Items"] = "获取装备物品",
+    ["Search"] = "搜索",
+    ["Combat"] = "战斗",
+    ["Bring"] = "获取",
+    ["Other"] = "其他",
+    ["Teleport"] = "传送",
+    ["Tyre"] = "轮胎",
+    ["Bolt"] = "螺栓",
+    ["Broken Fan"] = "破风扇",
+    ["Broken Microwave"] = "破微波炉",
+    ["Sheet Metal"] = "金属板",
+    ["Old Radio"] = "旧收音机",
+    ["Washing Machine"] = "洗衣机",
+    ["Old Car Engine"] = "旧汽车引擎",
+    ["Log"] = "原木",
+    ["Chair"] = "椅子",
+    ["Coal"] = "煤炭",
+    ["Fuel Canister"] = "燃料罐",
+    ["Oil Barrel"] = "油桶",
+    ["Cake"] = "蛋糕",
+    ["Cooked Steak"] = "熟牛排",
+    ["Cooked Morsel"] = "熟小块肉",
+    ["Ribs"] = "排骨",
+    ["Salmon"] = "三文鱼",
+    ["Cooked Salmon"] = "熟三文鱼",
+    ["Cooked Ribs"] = "熟排骨",
+    ["Mackerel"] = "青花鱼",
+    ["Cooked Mackerel"] = "熟青花鱼",
+    ["Steak"] = "牛排",
+    ["Morsel"] = "小块肉",
+    ["Berry"] = "浆果",
+    ["Carrot"] = "胡萝卜",
+    ["Bandage"] = "绷带",
+    ["MedKit"] = "医疗包",
+    ["Revolver"] = "左轮手枪",
+    ["Rifle"] = "步枪",
+    ["Leather Body"] = "皮革护甲",
+    ["Iron Body"] = "钢铁护甲",
+    ["Revolver Ammo"] = "左轮子弹",
+    ["Rifle Ammo"] = "步枪子弹",
+    ["99 Night in the Forest"] = "99夜森林（汉化by法兰西入HEADLESS)",
+    ["Borenhub"] = "Borenhub",
+    ["Giant Sack"] = "巨型袋子",
+    ["Good Sack"] = "优质袋子",
+    ["Strong Axe"] = "强力斧头",
+    ["Good Axe"] = "优质斧头",
+    ["Auto Upgrade Campfire"] = "自动升级营火",
+    ["Choose the items"] = "选择物品",
+    ["Auto Scrap Items"] = "自动拆解物品",
+    ["Auto Scrap Item"] = "自动拆解物品",
+    ["Auto Cook Food"] = "自动烹饪食物",
+    ["Biofuel"] = "生物燃料",
+    ["Teleport to Random"] = "随机传送",
+    ["Select Child"] = "选择孩子",
+    ["Refresh List"] = "刷新列表",
+    ["Lost Child"] = "迷路的孩子",
+    ["Teleport to Trader"] = "传送到商人处",
+    ["Teleport to Campfire"] = "传送到营火处",
+    ["Teleport to Child"] = "传送到孩子处",
+    ["Select Chest"] = "选择箱子",
+    ["Teleport to Chest"] = "传送到箱子处",
+    ["Chest 1"] = "箱子1",
+    ["Chest 2"] = "箱子2",
+    ["Chest 3"] = "箱子3",
+    ["Chest 4"] = "箱子4",
+    ["Chest 5"] = "箱子5",
+    ["Chest 6"] = "箱子6",
+    ["Chest 7"] = "箱子7",
+    ["Chest 8"] = "箱子8",
+}
+
+local function translateText(text)
+    if not text or type(text) ~= "string" then return text end
+    if Translations[text] then return Translations[text] end
+    for en, cn in pairs(Translations) do
+        if text:find(en) then return text:gsub(en, cn) end
+    end
+    return text
+end
+
+local translatedElements = {}
+local originalTexts = {}
+
+local function safeTranslateElement(element)
+    if translatedElements[element] then return end
+    
+    pcall(function()
+        if element:IsA("TextLabel") or element:IsA("TextButton") or element:IsA("TextBox") then
+            local currentText = element.Text
+            if currentText and currentText ~= "" then
+                if not originalTexts[element] then
+                    originalTexts[element] = currentText
+                end
+                
+                local translatedText = translateText(currentText)
+                if translatedText ~= currentText then
+                    element.Text = translatedText
+                    translatedElements[element] = true
+                end
+            end
+        end
+    end)
+end
+
+local function setupSmartListener()
+    local function onTextPropertyChanged(element)
+        if translatedElements[element] then
+            local currentText = element.Text
+            local originalText = originalTexts[element]
+            
+            if currentText == originalText or translateText(currentText) == currentText then
+                translatedElements[element] = nil
+                return
+            end
+            
+            local translatedText = translateText(currentText)
+            if translatedText ~= currentText then
+                element.Text = translatedText
+            end
+        else
+            safeTranslateElement(element)
+        end
+    end
+
+    local function addSmartListener(parent)
+        parent.DescendantAdded:Connect(function(descendant)
+            task.wait(0.3)  -- 新元素翻译延迟（改小可加快响应）
+            safeTranslateElement(descendant)
+            
+            if descendant:IsA("TextLabel") or descendant:IsA("TextButton") or descendant:IsA("TextBox") then
+                descendant:GetPropertyChangedSignal("Text"):Connect(function()
+                    task.wait(0.1)  -- 文本变化翻译延迟（改小可加快响应）
+                    onTextPropertyChanged(descendant)
+                end)
+            end
+        end)
+    end
+    
+    pcall(addSmartListener, game:GetService("CoreGui"))
+    local player = game:GetService("Players").LocalPlayer
+    if player and player:FindFirstChild("PlayerGui") then
+        pcall(addSmartListener, player.PlayerGui)
+    end
+end
+
+local function delayedInitialTranslate()
+    task.wait(5)
+    
+    for _, gui in ipairs(game:GetService("CoreGui"):GetDescendants()) do
+        safeTranslateElement(gui)
+    end
+    
+    local player = game:GetService("Players").LocalPlayer
+    if player and player:FindFirstChild("PlayerGui") then
+        for _, gui in ipairs(player.PlayerGui:GetDescendants()) do
+            safeTranslateElement(gui)
+        end
+    end
+end
+
+task.wait(2)
+setupSmartListener()
+delayedInitialTranslate()
+
+local success, err = pcall(function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/eikikrkr-ux/99-Nights-in-the-forest-bornhub/refs/heads/main/okies"))()
+end)
+
+if not success then
+    warn("加载失败:", err)
+end
