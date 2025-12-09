@@ -1,11 +1,11 @@
 local Translations = {
-["Main"] = "主界面（by法兰西入HEADLESS)",
+["Main"] = "主界面",
 ["RED LIGHT"] = "红灯游戏",
 ["Teleport to End"] = "传送到终点",
 ["Remove Injury"] = "移除受伤状态",
 ["Auto Collect Bandage (detected)"] = "自动收集绷带（已检测）",
 ["Shoot Marked Players"] = "射击被标记的玩家",
-["Shoot Marked Players v2"] = "射击被标记的玩家二代",
+["Shoot Marked Players v2"] = "射击被标记的玩家v2",
 ["HIDE & SEEK"] = "捉迷藏",
 ["Auto Kill Hiders"] = "自动击杀躲藏者",
 ["Auto Escape"] = "自动逃脱",
@@ -47,13 +47,13 @@ local Translations = {
 ["REBEL"] = "反叛者",
 ["Aimbot Guards"] = "守卫自瞄",
 ["ESP Guards"] = "守卫透视",
-["Instant Rebel"] = "立即反叛",
-["Instant Rebel v2"] = "立即反叛二代",
+["Instant Rebel"] = "立即杀死守卫",
+["Instant Rebel v2"] = "立即杀死守卫v2",
 ["OTHERS"] = "其他",
 ["Unlock Dash"] = "解锁冲刺",
 ["Phantom Step"] = "幻影步",
 ["Revive"] = "复活",
-["Auto QTE V2"] = "自动快速反应事件二代",
+["Auto QTE V2"] = "自动快速反应事件v2",
 ["Faster Speed"] = "更快速度",
 ["Fov Booster"] = "视野增强",
 ["AntiLag"] = "防卡顿",
@@ -164,8 +164,7 @@ setupSmartListener()
 delayedInitialTranslate()
 
 local success, err = pcall(function()
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Tax-Script/TaxHub/refs/heads/main/Unm"))()
-end)
+loadstring(game:HttpGet("https://raw.githubusercontent.com/eikikrkr-ux/bypasok/refs/heads/main/ok"))()
 
 if not success then
 warn("加载失败:", err)
