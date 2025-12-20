@@ -1,0 +1,173 @@
+local Translations = {
+    ["Katchi Hub"] = "Katchi Hub",
+    ["Guts & BlackPowder"] = "内脏与黑火药",
+    ["by XKatchii"] = "制作by xkatchii汉化by法兰西入",
+    ["Search"] = "搜索",
+    ["Dashboard"] = "主控面板",
+    ["Main"] = "主功能",
+    ["Kill Aura"] = "杀戮光环",
+    ["Dracula (New)"] = "德古拉（新增）",
+    ["Players"] = "玩家",
+    ["Classes"] = "职业",
+    ["Headless Horseman"] = "无头骑士",
+    ["Information"] = "信息",
+    ["Professional Guts & Blackpowder Script Hub"] = "专业内脏与黑火药脚本hub",
+    ["Made by Yuki and ziaan"] = "由Yuki和ziaan制作",
+    ["Executor"] = "注入器",
+    ["Changelogs"] = "更新日志",
+    ["New Features!"] = "新功能！",
+    ["Community"] = "社区",
+    ["Join Our Discord"] = "加入我们的Discord",
+    ["Get support, updates, and connect with other Katchi Hub users!"] = "获取支持、更新，并与其他卡奇枢纽用户交流！",
+    ["Click the button below to copy our Discord invite link"] = "点击下方按钮复制我们的Discord邀请链接",
+    ["Click to copy the invite link"] = "点击复制邀请链接",
+    ["Aiming"] = "瞄准",
+    ["Head Hit"] = "头部命中",
+    ["Aimlock Bomber"] = "自爆锁头",
+    ["Range (studs)"] = "范围（单位）",
+    ["Smoothness (lower = faster)"] = "平滑度（数值越小越快）",
+    ["Legit Thingys"] = "常规功能",
+    ["Auto Jump"] = "自动跳跃",
+    ["Hitbox Expander"] = "碰撞箱扩大",
+    ["Hitbox Zombie Size"] = "僵尸碰撞箱大小",
+    ["Hitbox Zombie Range"] = "僵尸碰撞箱范围",
+    ["ESP & Zombie Alerts"] = "实体透视与僵尸警报",
+    ["ESP Barrel Zombie"] = "barrel透视",
+    ["Show All Barrel Zombies!"] = "显示所有barrel！",
+    ["ESP Cuirassier"] = "胸甲骑兵透视",
+    ["Show Cuirassier Zombies"] = "显示胸甲骑兵",
+    ["Notify Cuirassier Charge"] = "胸甲骑兵冲锋提醒",
+    ["Warns when a Cuirassier Zombie is charging"] = "胸甲骑兵冲锋时发出警告",
+    ["Runner ESP"] = "runner僵尸透视",
+    ["Highlights zombies with Eye but no Axe and marks as Runner"] = "高亮显示有眼睛无斧头的僵尸并标记为奔跑者",
+    ["Zapper ESP"] = "义和团透视",
+    ["Highlights zombies with Axe and marks as Zapper"] = "高亮显示有斧头的僵尸并标记为zapper",
+    ["Igniter ESP"] = "点火者透视",
+    ["Highlights Igniter zombies"] = "高亮显示点火者",
+    ["Kill Aura Range"] = "杀戮光环范围",
+    ["Attack Speed"] = "攻击速度",
+    ["attack speed"] = "攻击速度",
+    ["Settings"] = "设置",
+    ["Multiple Targets"] = "多目标",
+    ["Controls how many zombies kill aura targets"] = "控制杀戮光环锁定的僵尸数量",
+    ["Auto Look"] = "自动瞄准",
+    ["Ignore Spawning Zombies"] = "忽略生成中的僵尸",
+    ["Hit Dracula"] = "击中德古拉",
+    ["Swing Spam Count"] = "挥砍次数（每刻1-25）",
+    ["Swings per tick (1-25)"] = "每刻挥砍次数（1-25）",
+    ["Dracula Range"] = "德古拉范围",
+    ["Attack distance (1-25 studs)"] = "攻击距离（1-25单位）",
+    ["Dracula ESP"] = "德古拉透视",
+    ["Silver ESP"] = "银质物品透视",
+    ["Player ESP"] = "玩家透视",
+    ["Players Chams ESP"] = "玩家着色透视",
+    ["Show Chams ESP on Players (color based on health)"] = "为玩家显示着色透视（根据生命值变色）",
+    ["Players Billboard ESP"] = "玩家公告板透视",
+    ["Show text ESP on Players (name, health, distance)"] = "为玩家显示文字透视（名称、生命值、距离）",
+    ["Notify Low Health Players"] = "低生命值玩家提醒",
+    ["Notify when players reach Low / Dying health"] = "当玩家生命值过低/濒死时发出提醒",
+    ["Grabbed & Pinned"] = "被僵尸控住",
+    ["Notify Grabbed and Pinned Players"] = "被僵尸控住玩家提醒",
+    ["Notifies when a player is grabbed or pinned"] = "当玩家被控住时发出提醒",
+    ["Medic"] = "医疗兵",
+    ["Auto Request Heal Dying Players"] = "自动为快死的玩家请求治疗",
+    ["Automatically requests heal for players with low health when nearby"] = "靠近低生命值玩家时自动为其请求治疗",
+    ["Heal Threshold (%)"] = "治疗阈值（%）",
+    ["Health percentage threshold for auto heal"] = "自动治疗的生命值百分比阈值",
+    ["Sapper"] = "工兵",
+    ["Auto Repair"] = "自动修复",
+    ["Auto repair's Buildings"] = "自动修复建筑",
+    ["Headless Horseman Features"] = "无头骑士功能",
+    ["Aimlock Keybind"] = "锁头快捷键",
+    ["Press a key to set the aimlock keybind"] = "按一个键设置锁头快捷键",
+    ["Headless Horseman ESP"] = "无头骑士透视",
+    ["Highlight the Headless Horseman boss"] = "高亮显示无头骑士首领",
+    ["Headless Horseman Aimlock"] = "无头骑士锁头",
+    ["Aimlock onto the Headless Horseman"] = "锁定无头骑士目标",
+    ["Prediction (Ping in ms)"] = "预判（延迟/毫秒）",
+    ["Adjust aimlock prediction based on your ping"] = "根据你的延迟调整锁头预判",
+    ["Aim Button Size"] = "瞄准按钮大小",
+    ["Adjust on-screen aimlock button size"] = "调整屏幕上的锁头按钮大小",
+    ["Close Window"] = "关闭窗口",
+    ["Do you want to close this window? You will not be able to open it again."] = "你确定要关闭此窗口吗？关闭后将无法再次打开。",
+    ["Cancel"] = "取消",
+    ["CHARGE"] = "蓄力",
+    ["Another Example"] = "示例"
+}
+
+local function translateText(text)
+    if not text or type(text) ~= "string" then return text end
+    if Translations[text] then return Translations[text] end
+    for en, cn in pairs(Translations) do
+        if text:find(en) then return text:gsub(en, cn) end
+    end
+    return text
+end
+
+local translatedElements = {}
+local originalTexts = {}
+
+local function safeTranslateElement(element)
+    if translatedElements[element] then return end
+    pcall(function()
+        if element:IsA("TextLabel") or element:IsA("TextButton") or element:IsA("TextBox") then
+            local currentText = element.Text
+            if currentText and currentText ~= "" then
+                if not originalTexts[element] then
+                    originalTexts[element] = currentText
+                end
+                local translatedText = translateText(currentText)
+                if translatedText ~= currentText then
+                    element.Text = translatedText
+                    translatedElements[element] = true
+                end
+            end
+        end
+    end)
+end
+
+local function setupSmartListener()
+    local function onTextPropertyChanged(element)
+        if translatedElements[element] then
+            local currentText = element.Text
+            local originalText = originalTexts[element]
+            if currentText == originalText or translateText(currentText) == currentText then
+                translatedElements[element] = nil
+                return
+            end
+            local translatedText = translateText(currentText)
+            if translatedText ~= currentText then
+                element.Text = translatedText
+            end
+        else
+            safeTranslateElement(element)
+        end
+    end
+
+    local function addSmartListener(parent)
+        parent.DescendantAdded:Connect(function(descendant)
+            task.wait(0.3)
+            safeTranslateElement(descendant)
+            if descendant:IsA("TextLabel") or descendant:IsA("TextButton") or descendant:IsA("TextBox") then
+                descendant:GetPropertyChangedSignal("Text"):Connect(function()
+                    task.wait(0.1)
+                    onTextPropertyChanged(descendant)
+                end)
+            end
+        end)
+    end
+    pcall(addSmartListener, game:GetService("CoreGui"))
+    local player = game:GetService("Players").LocalPlayer
+    if player and player:FindFirstChild("PlayerGui") then
+        pcall(addSmartListener, player.PlayerGui)
+    end
+end
+
+local function delayedInitialTranslate()
+    task.wait(5)
+    for _, gui in ipairs(game:GetService("CoreGui"):GetDescendants()) do
+        safeTranslateElement(gui)
+    end
+    local player = game:GetService("Players").LocalPlayer
+    if player and player:FindFirstChild("PlayerGui") then
+        for _, gui 
