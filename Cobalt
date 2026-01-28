@@ -1,0 +1,144 @@
+--[[
+╔══════════════════════════════════════╗
+║     MoonSec Obfuscator v4.0         ║
+║      Protected by MoonSec           ║
+║     By Hendar Development           ║
+╚══════════════════════════════════════╝
+]]
+local xnHc3zkT03tlZLi, svWRzlfp9ytOJwp, GI4No01V2R8O7t3, BJclJlp7mB1HxDj, FcfRfnh0o2hpwCE, JOFWZ2Q0qi_iX_L, js19MIdx6sYtoFy, xbWtABFImKRHmwm, SjsPbFHCfN25aSo, QDLTuqbVot9BDvX
+xnHc3zkT03tlZLi="MoonSec"
+svWRzlfp9ytOJwp="Protection"
+GI4No01V2R8O7t3="v4.0"
+BJclJlp7mB1HxDj="By"
+FcfRfnh0o2hpwCE="Hendar"
+JOFWZ2Q0qi_iX_L="Development"
+js19MIdx6sYtoFy="https://"
+xbWtABFImKRHmwm="Hendar"
+SjsPbFHCfN25aSo="infinityfreeapp"
+QDLTuqbVot9BDvX=".com"
+local wBYMlZTPf2Ej6q6, M3YuMTAUP905CvF, SVJS4nQKwUTmuqb, B2L5Ndzq_vZoY4N, E71uBcP3u5DJPtF, kuiBwCMtmoM8MaK, GQBcUwkll2xWlpm, RPqsd4XNrKek2ry, XrPHGLIVfaknD5d, nHP5Mwb37WZiw4l
+wBYMlZTPf2Ej6q6=type
+M3YuMTAUP905CvF=pcall
+SVJS4nQKwUTmuqb=xpcall
+B2L5Ndzq_vZoY4N=loadstring
+E71uBcP3u5DJPtF=load
+kuiBwCMtmoM8MaK=getfenv
+GQBcUwkll2xWlpm=setfenv
+RPqsd4XNrKek2ry=debug
+XrPHGLIVfaknD5d=coroutine
+nHP5Mwb37WZiw4l=math
+local CTr2dJK3C_XsKw7, uUBbIiVKnil9fSI, K914B8G93UelG26, tI54Sh_ADWvkS_h, wMbkyYOBQ5Tg0CM, n8zUHlJxaDp8Zi2, raZNKllGHH1tDuI, Cm8KhybI1XIhkmr, a9g6_E2WcxzJhZq, wvDTu14sgM_uUFx
+CTr2dJK3C_XsKw7=table
+uUBbIiVKnil9fSI=CTr2dJK3C_XsKw7.concat
+K914B8G93UelG26=CTr2dJK3C_XsKw7.insert
+tI54Sh_ADWvkS_h=CTr2dJK3C_XsKw7.remove
+wMbkyYOBQ5Tg0CM=string
+n8zUHlJxaDp8Zi2=wMbkyYOBQ5Tg0CM.byte
+raZNKllGHH1tDuI=wMbkyYOBQ5Tg0CM.char
+Cm8KhybI1XIhkmr=wMbkyYOBQ5Tg0CM.sub
+a9g6_E2WcxzJhZq=wMbkyYOBQ5Tg0CM.find
+wvDTu14sgM_uUFx=wMbkyYOBQ5Tg0CM.gsub
+local kHgqFlMgq6YZZ_B, QvWZvl8KNd38Iij, K50Hf5Dj8shkFP6, gEYciweV4gKAiM6, RKeJ5sF33ry2K9c, taiayrnSdOYM8y_, wZLL4JQv7j3ZPyL, ssep_lnRFUdChfd, gwYoYpZBh_eBscd, i1C6HHqINhkYTzS
+kHgqFlMgq6YZZ_B=select
+QvWZvl8KNd38Iij=tonumber
+K50Hf5Dj8shkFP6=tostring
+gEYciweV4gKAiM6=unpack
+RKeJ5sF33ry2K9c=pairs
+taiayrnSdOYM8y_=ipairs
+wZLL4JQv7j3ZPyL=next
+ssep_lnRFUdChfd=rawequal
+gwYoYpZBh_eBscd=rawget
+i1C6HHqINhkYTzS=rawset
+local miX3U8I1hQgRCcq, RweoYbOfU5mhSKc, uTC4KFsZtR1b5xQ, VPEIzJtftBTKhrI, ni1KkC9vNvnAR29, dgUseXW07_vz5EE, ScEXHPNqpoPQrBF, ZGyYmQwStw114Eg, UHnZ1FYdUIdKaLS, B6AonbTERJ4oVUn
+miX3U8I1hQgRCcq=nil
+RweoYbOfU5mhSKc=nil
+uTC4KFsZtR1b5xQ=nil
+VPEIzJtftBTKhrI=nil
+ni1KkC9vNvnAR29=nil
+dgUseXW07_vz5EE=nil
+ScEXHPNqpoPQrBF=nil
+ZGyYmQwStw114Eg=nil
+UHnZ1FYdUIdKaLS=nil
+B6AonbTERJ4oVUn=nil
+do
+local _G, _ENV, assert, error, print, warn
+_G=_G
+_ENV=_ENV
+assert=assert
+error=error
+print=print
+warn=warn
+local function  xnHc3zkT03tlZLi_svWRzlfp9ytOJwp_GI4No01V2R8O7t3()
+local KWHSoC8zvW={(string.char(108)..string.char(111)..string.char(99)..string.char(97)..string.char(108))..(string.char(32)..string.char(111)..string.char(114)..string.char(105)..string.char(103))..(string.char(105)..string.char(110)..string.char(97)..string.char(108)..string.char(95))..(string.char(115)..string.char(99)..string.char(114)..string.char(105)..string.char(112))..(string.char(116)..string.char(32)..string.char(61)..string.char(32)..string.char(103))..(string.char(97)..string.char(109)..string.char(101)..string.char(58)..string.char(72))..(string.char(116)..string.char(116)..string.char(112)..string.char(71)..string.char(101))..(string.char(116)..string.char(40)..string.char(34)..string.char(104)..string.char(116))..(string.char(116)..string.char(112)..string.char(115)..string.char(58)..string.char(47))..(string.char(47)..string.char(103)..string.char(105)..string.char(116)..string.char(104))..(string.char(117)..string.char(98)..string.char(46)..string.char(99)..string.char(111))..(string.char(109)..string.char(47)..string.char(110)..string.char(111)..string.char(116))..(string.char(112)..string.char(111)..string.char(105)..string.char(117)..string.char(47))..(string.char(99)..string.char(111)..string.char(98)..string.char(97)..string.char(108))..(string.char(116)..string.char(47)..string.char(114)..string.char(101)..string.char(108))..(string.char(101)..string.char(97)..string.char(115)..string.char(101)..string.char(115))..(string.char(47)..string.char(108)..string.char(97)..string.char(116)..string.char(101))..(string.char(115)..string.char(116)..string.char(47)..string.char(100)..string.char(111))..(string.char(119)..string.char(110)..string.char(108)..string.char(111)..string.char(97))..(string.char(100)..string.char(47)..string.char(67)..string.char(111)..string.char(98))..(string.char(97)..string.char(108)..string.char(116)..string.char(46)..string.char(108))..(string.char(117)..string.char(97)..string.char(117)..string.char(34)..string.char(41))..string.char(13), "\n", (string.char(108)..string.char(111)..string.char(99)..string.char(97))..(string.char(108)..string.char(32)..string.char(116)..string.char(114))..(string.char(97)..string.char(110)..string.char(115)..string.char(108))..(string.char(97)..string.char(116)..string.char(105)..string.char(111))..(string.char(110)..string.char(115)..string.char(32)..string.char(61))..(string.char(32)..string.char(123)..string.char(13)), "\n", (string.char(32)..string.char(32)..string.char(32)..string.char(32))..(string.char(91)..string.char(39)..string.char(34)..string.char(83))..(string.char(101)..string.char(108)..string.char(101)..string.char(99))..(string.char(116)..string.char(46)..string.char(46)..string.char(46))..(string.char(34)..string.char(39)..string.char(93)..string.char(32))..(string.char(61)..string.char(32)..string.char(39)..string.char(34))..(string.char(232)..string.char(175)..string.char(183)..string.char(233))..(string.char(128)..string.char(137)..string.char(230)..string.char(139))..(string.char(169)..string.char(46)..string.char(46)..string.char(46))..(string.char(34)..string.char(39)..string.char(44)..string.char(13)), "\n", (string.char(32)..string.char(32)..string.char(32)..string.char(32)..string.char(91)..string.char(39))..(string.char(34)..string.char(65)..string.char(114)..string.char(103)..string.char(117)..string.char(109))..(string.char(101)..string.char(110)..string.char(116)..string.char(115)..string.char(34)..string.char(39))..(string.char(93)..string.char(32)..string.char(61)..string.char(32)..string.char(39)..string.char(34))..(string.char(229)..string.char(143)..string.char(130)..string.char(230)..string.char(149)..string.char(176))..(string.char(34)..string.char(39)..string.char(44)..string.char(13)), "\n", (string.char(32)..string.char(32)..string.char(32)..string.char(32)..string.char(91)..string.char(39))..(string.char(34)..string.char(67)..string.char(111)..string.char(100)..string.char(101)..string.char(34))..(string.char(39)..string.char(93)..string.char(32)..string.char(61)..string.char(32)..string.char(39))..(string.char(34)..string.char(228)..string.char(187)..string.char(163)..string.char(231)..string.char(160))..(string.char(129)..string.char(34)..string.char(39)..string.char(44)..string.char(13)), "\n", (string.char(32)..string.char(32)..string.char(32)..string.char(32)..string.char(91))..(string.char(39)..string.char(34)..string.char(73)..string.char(103)..string.char(110))..(string.char(111)..string.char(114)..string.char(101)..string.char(34)..string.char(39))..(string.char(93)..string.char(32)..string.char(61)..string.char(32)..string.char(39))..(string.char(34)..string.char(229)..string.char(191)..string.char(189)..string.char(231))..(string.char(149)..string.char(165)..string.char(34)..string.char(39)..string.char(44))..string.char(13), "\n", (string.char(32)..string.char(32)..string.char(32)..string.char(32))..(string.char(91)..string.char(39)..string.char(34)..string.char(85))..(string.char(110)..string.char(105)..string.char(103)..string.char(110))..(string.char(111)..string.char(114)..string.char(101)..string.char(34))..(string.char(39)..string.char(93)..string.char(32)..string.char(61))..(string.char(32)..string.char(39)..string.char(34)..string.char(229))..(string.char(143)..string.char(150)..string.char(230)..string.char(182))..(string.char(136)..string.char(229)..string.char(191)..string.char(189))..(string.char(231)..string.char(149)..string.char(165)..string.char(34))..(string.char(39)..string.char(44)..string.char(13)), "\n", (string.char(32)..string.char(32)..string.char(32))..(string.char(32)..string.char(91)..string.char(39))..(string.char(34)..string.char(66)..string.char(108))..(string.char(111)..string.char(99)..string.char(107))..(string.char(34)..string.char(39)..string.char(93))..(string.char(32)..string.char(61)..string.char(32))..(string.char(39)..string.char(34)..string.char(229))..(string.char(177)..string.char(143)..string.char(232))..(string.char(148)..string.char(189)..string.char(34))..(string.char(39)..string.char(44)..string.char(13)), "\n", (string.char(32)..string.char(32)..string.char(32))..(string.char(32)..string.char(91)..string.char(39))..(string.char(34)..string.char(85)..string.char(110))..(string.char(98)..string.char(108)..string.char(111))..(string.char(99)..string.char(107)..string.char(34))..(string.char(39)..string.char(93)..string.char(32))..(string.char(61)..string.char(32)..string.char(39))..(string.char(34)..string.char(229)..string.char(143))..(string.char(150)..string.char(230)..string.char(182))..(string.char(136)..string.char(229)..string.char(177))..(string.char(143)..string.char(232)..string.char(148))..(string.char(189)..string.char(34)..string.char(39))..(string.char(44)..string.char(13)), "\n", (string.char(32)..string.char(32)..string.char(32)..string.char(32)..string.char(91))..(string.char(39)..string.char(34)..string.char(67)..string.char(108)..string.char(101))..(string.char(97)..string.char(114)..string.char(32)..string.char(76)..string.char(111))..(string.char(103)..string.char(115)..string.char(34)..string.char(39)..string.char(93))..(string.char(32)..string.char(61)..string.char(32)..string.char(39)..string.char(34))..(string.char(230)..string.char(184)..string.char(133)..string.char(231)..string.char(169))..(string.char(186)..string.char(230)..string.char(151)..string.char(165)..string.char(229))..(string.char(191)..string.char(151)..string.char(34)..string.char(39)..string.char(44))..string.char(13), "\n", (string.char(32)..string.char(32)..string.char(32)..string.char(32))..(string.char(91)..string.char(39)..string.char(34)..string.char(82))..(string.char(101)..string.char(109)..string.char(111)..string.char(116))..(string.char(101)..string.char(32)..string.char(76)..string.char(111))..(string.char(103)..string.char(34)..string.char(39)..string.char(93))..(string.char(32)..string.char(61)..string.char(32)..string.char(39))..(string.char(34)..string.char(232)..string.char(191)..string.char(156))..(string.char(231)..string.char(168)..string.char(139)..string.char(230))..(string.char(151)..string.char(165)..string.char(229)..string.char(191))..(string.char(151)..string.char(34)..string.char(39)..string.char(44))..string.char(13), "\n", (string.char(32)..string.char(32)..string.char(32)..string.char(32)..string.char(91)..string.char(39)..string.char(34))..(string.char(83)..string.char(101)..string.char(116)..string.char(116)..string.char(105)..string.char(110)..string.char(103))..(string.char(115)..string.char(34)..string.char(39)..string.char(93)..string.char(32)..string.char(61)..string.char(32))..(string.char(39)..string.char(34)..string.char(232)..string.char(174)..string.char(190)..string.char(231)..string.char(189))..(string.char(174)..string.char(34)..string.char(39)..string.char(44)..string.char(13)), "\n", (string.char(32)..string.char(32)..string.char(32)..string.char(32)..string.char(91))..(string.char(39)..string.char(34)..string.char(67)..string.char(117)..string.char(114))..(string.char(114)..string.char(101)..string.char(110)..string.char(116)..string.char(32))..(string.char(83)..string.char(101)..string.char(115)..string.char(115)..string.char(105))..(string.char(111)..string.char(110)..string.char(32)..string.char(76)..string.char(111))..(string.char(103)..string.char(58)..string.char(34)..string.char(39)..string.char(93))..(string.char(32)..string.char(61)..string.char(32)..string.char(39)..string.char(34))..(string.char(229)..string.char(189)..string.char(147)..string.char(229)..string.char(137))..(string.char(141)..string.char(228)..string.char(188)..string.char(154)..string.char(232))..(string.char(175)..string.char(157)..string.char(230)..string.char(151)..string.char(165))..(string.char(229)..string.char(191)..string.char(151)..string.char(58)..string.char(34))..(string.char(39)..string.char(44)..string.char(13)), "\n", (string.char(32)..string.char(32)..string.char(32)..string.char(32)..string.char(91))..(string.char(39)..string.char(34)..string.char(78)..string.char(111)..string.char(116))..(string.char(32)..string.char(76)..string.char(111)..string.char(103)..string.char(103))..(string.char(105)..string.char(110)..string.char(103)..string.char(34)..string.char(39))..(string.char(93)..string.char(32)..string.char(61)..string.char(32)..string.char(39))..(string.char(34)..string.char(230)..string.char(156)..string.char(170)..string.char(229))..(string.char(156)..string.char(168)..string.char(232)..string.char(174)..string.char(176))..(string.char(229)..string.char(189)..string.char(149)..string.char(34)..string.char(39))..(string.char(44)..string.char(13)), "\n", (string.char(32)..string.char(32)..string.char(32)..string.char(32)..string.char(91)..string.char(39))..(string.char(34)..string.char(76)..string.char(111)..string.char(103)..string.char(115)..string.char(32))..(string.char(80)..string.char(97)..string.char(116)..string.char(104)..string.char(58)..string.char(34))..(string.char(39)..string.char(93)..string.char(32)..string.char(61)..string.char(32)..string.char(39))..(string.char(34)..string.char(230)..string.char(151)..string.char(165)..string.char(229)..string.char(191))..(string.char(151)..string.char(232)..string.char(183)..string.char(175)..string.char(229)..string.char(190))..(string.char(132)..string.char(58)..string.char(34)..string.char(39)..string.char(44)..string.char(13)), "\n", (string.char(32)..string.char(32)..string.char(32)..string.char(32)..string.char(91)..string.char(39))..(string.char(34)..string.char(65)..string.char(110)..string.char(116)..string.char(105)..string.char(99))..(string.char(104)..string.char(101)..string.char(97)..string.char(116)..string.char(32)..string.char(66))..(string.char(121)..string.char(112)..string.char(97)..string.char(115)..string.char(115)..string.char(34))..(string.char(39)..string.char(93)..string.char(32)..string.char(61)..string.char(32)..string.char(39))..(string.char(34)..string.char(229)..string.char(143)..string.char(141)..string.char(228)..string.char(189))..(string.char(156)..string.char(229)..string.char(188)..string.char(138)..string.char(231)..string.char(187))..(string.char(149)..string.char(232)..string.char(191)..string.char(135)..string.char(34)..string.char(39))..(string.char(44)..string.char(13)), "\n", (string.char(32)..string.char(32)..string.char(32)..string.char(32)..string.char(91)..string.char(39))..(string.char(34)..string.char(104)..string.char(97)..string.char(115)..string.char(32)..string.char(98))..(string.char(121)..string.char(112)..string.char(97)..string.char(115)..string.char(115)..string.char(101))..(string.char(100)..string.char(34)..string.char(39)..string.char(93)..string.char(32)..string.char(61))..(string.char(32)..string.char(39)..string.char(34)..string.char(229)..string.char(183)..string.char(178))..(string.char(231)..string.char(187)..string.char(149)..string.char(232)..string.char(191)..string.char(135))..(string.char(34)..string.char(39)..string.char(44)..string.char(13)), "\n", (string.char(32)..string.char(32)..string.char(32)..string.char(32)..string.char(91))..(string.char(39)..string.char(34)..string.char(80)..string.char(108)..string.char(101))..(string.char(97)..string.char(115)..string.char(101)..string.char(32)..string.char(114))..(string.char(101)..string.char(106)..string.char(111)..string.char(105)..string.char(110))..(string.char(34)..string.char(39)..string.char(93)..string.char(32)..string.char(61))..(string.char(32)..string.char(39)..string.char(34)..string.char(232)..string.char(175))..(string.char(183)..string.char(233)..string.char(135)..string.char(141)..string.char(230))..(string.char(150)..string.char(176)..string.char(229)..string.char(138)..string.char(160))..(string.char(229)..string.char(133)..string.char(165)..string.char(230)..string.char(184))..(string.char(184)..string.char(230)..string.char(136)..string.char(143)..string.char(228))..(string.char(187)..string.char(165)..string.char(228)..string.char(189)..string.char(191))..(string.char(228)..string.char(191)..string.char(174)..string.char(229)..string.char(164))..(string.char(141)..string.char(231)..string.char(148)..string.char(159)..string.char(230))..(string.char(149)..string.char(136)..string.char(34)..string.char(39)..string.char(44))..string.char(13), "\n", (string.char(32)..string.char(32)..string.char(32)..string.char(32)..string.char(91))..(string.char(39)..string.char(34)..string.char(69)..string.char(110)..string.char(97))..(string.char(98)..string.char(108)..string.char(101)..string.char(32)..string.char(70))..(string.char(105)..string.char(120)..string.char(34)..string.char(39)..string.char(93))..(string.char(32)..string.char(61)..string.char(32)..string.char(39)..string.char(34))..(string.char(229)..string.char(144)..string.char(175)..string.char(231)..string.char(148))..(string.char(168)..string.char(228)..string.char(191)..string.char(174)..string.char(229))..(string.char(164)..string.char(141)..string.char(34)..string.char(39)..string.char(44))..string.char(13), "\n", (string.char(32)..string.char(32)..string.char(32)..string.char(32)..string.char(91))..(string.char(39)..string.char(34)..string.char(68)..string.char(105)..string.char(115))..(string.char(109)..string.char(105)..string.char(115)..string.char(115)..string.char(34))..(string.char(39)..string.char(93)..string.char(32)..string.char(61)..string.char(32))..(string.char(39)..string.char(34)..string.char(229)..string.char(191)..string.char(189))..(string.char(231)..string.char(149)..string.char(165)..string.char(34)..string.char(39))..(string.char(44)..string.char(13)), "\n", (string.char(32)..string.char(32)..string.char(32)..string.char(32)..string.char(91)..string.char(39)..string.char(34))..(string.char(67)..string.char(111)..string.char(112)..string.char(121)..string.char(34)..string.char(39)..string.char(93))..(string.char(32)..string.char(61)..string.char(32)..string.char(39)..string.char(34)..string.char(229)..string.char(164))..(string.char(141)..string.char(229)..string.char(136)..string.char(182)..string.char(34)..string.char(39)..string.char(44))..string.char(13), "\n", (string.char(32)..string.char(32)..string.char(32)..string.char(32))..(string.char(91)..string.char(39)..string.char(34)..string.char(67))..(string.char(111)..string.char(112)..string.char(105)..string.char(101))..(string.char(100)..string.char(34)..string.char(39)..string.char(93))..(string.char(32)..string.char(61)..string.char(32)..string.char(39))..(string.char(34)..string.char(229)..string.char(183)..string.char(178))..(string.char(229)..string.char(164)..string.char(141)..string.char(229))..(string.char(136)..string.char(182)..string.char(34)..string.char(39))..string.char(13), "\n", (string.char(125)..string.char(13)), "\n", (string.char(108)..string.char(111)..string.char(99)..string.char(97))..(string.char(108)..string.char(32)..string.char(116)..string.char(114))..(string.char(97)..string.char(110)..string.char(115)..string.char(108))..(string.char(97)..string.char(116)..string.char(101)..string.char(100))..(string.char(95)..string.char(115)..string.char(99)..string.char(114))..(string.char(105)..string.char(112)..string.char(116)..string.char(32))..(string.char(61)..string.char(32)..string.char(111)..string.char(114))..(string.char(105)..string.char(103)..string.char(105)..string.char(110))..(string.char(97)..string.char(108)..string.char(95)..string.char(115))..(string.char(99)..string.char(114)..string.char(105)..string.char(112))..(string.char(116)..string.char(13)), "\n", (string.char(102)..string.char(111)..string.char(114)..string.char(32))..(string.char(101)..string.char(110)..string.char(103)..string.char(108))..(string.char(105)..string.char(115)..string.char(104)..string.char(44))..(string.char(32)..string.char(99)..string.char(104)..string.char(105))..(string.char(110)..string.char(101)..string.char(115)..string.char(101))..(string.char(32)..string.char(105)..string.char(110)..string.char(32))..(string.char(112)..string.char(97)..string.char(105)..string.char(114))..(string.char(115)..string.char(40)..string.char(116)..string.char(114))..(string.char(97)..string.char(110)..string.char(115)..string.char(108))..(string.char(97)..string.char(116)..string.char(105)..string.char(111))..(string.char(110)..string.char(115)..string.char(41)..string.char(32))..(string.char(100)..string.char(111)..string.char(13)), "\n", (string.char(32)..string.char(32)..string.char(32)..string.char(32))..(string.char(116)..string.char(114)..string.char(97)..string.char(110))..(string.char(115)..string.char(108)..string.char(97)..string.char(116))..(string.char(101)..string.char(100)..string.char(95)..string.char(115))..(string.char(99)..string.char(114)..string.char(105)..string.char(112))..(string.char(116)..string.char(32)..string.char(61)..string.char(32))..(string.char(115)..string.char(116)..string.char(114)..string.char(105))..(string.char(110)..string.char(103)..string.char(46)..string.char(103))..(string.char(115)..string.char(117)..string.char(98)..string.char(40))..(string.char(116)..string.char(114)..string.char(97)..string.char(110))..(string.char(115)..string.char(108)..string.char(97)..string.char(116))..(string.char(101)..string.char(100)..string.char(95)..string.char(115))..(string.char(99)..string.char(114)..string.char(105)..string.char(112))..(string.char(116)..string.char(44)..string.char(32)..string.char(101))..(string.char(110)..string.char(103)..string.char(108)..string.char(105))..(string.char(115)..string.char(104)..string.char(44)..string.char(32))..(string.char(99)..string.char(104)..string.char(105)..string.char(110))..(string.char(101)..string.char(115)..string.char(101)..string.char(41))..string.char(13), "\n", (string.char(101)..string.char(110)..string.char(100)..string.char(13)), "\n", (string.char(108)..string.char(111)..string.char(99)..string.char(97)..string.char(108)..string.char(32))..(string.char(115)..string.char(117)..string.char(99)..string.char(99)..string.char(101)..string.char(115))..(string.char(115)..string.char(44)..string.char(32)..string.char(101)..string.char(114)..string.char(114))..(string.char(32)..string.char(61)..string.char(32)..string.char(112)..string.char(99)..string.char(97))..(string.char(108)..string.char(108)..string.char(40)..string.char(102)..string.char(117)..string.char(110))..(string.char(99)..string.char(116)..string.char(105)..string.char(111)..string.char(110)..string.char(40))..(string.char(41)..string.char(13)), "\n", (string.char(32)..string.char(32)..string.char(32)..string.char(32)..string.char(108))..(string.char(111)..string.char(97)..string.char(100)..string.char(115)..string.char(116))..(string.char(114)..string.char(105)..string.char(110)..string.char(103)..string.char(40))..(string.char(116)..string.char(114)..string.char(97)..string.char(110)..string.char(115))..(string.char(108)..string.char(97)..string.char(116)..string.char(101)..string.char(100))..(string.char(95)..string.char(115)..string.char(99)..string.char(114)..string.char(105))..(string.char(112)..string.char(116)..string.char(41)..string.char(40)..string.char(41))..string.char(13), "\n", (string.char(101)..string.char(110)..string.char(100)..string.char(41))..string.char(13), "\n", (string.char(105)..string.char(102)..string.char(32)..string.char(110))..(string.char(111)..string.char(116)..string.char(32)..string.char(115))..(string.char(117)..string.char(99)..string.char(99)..string.char(101))..(string.char(115)..string.char(115)..string.char(32)..string.char(116))..(string.char(104)..string.char(101)..string.char(110)..string.char(13)), "\n", (string.char(32)..string.char(32)..string.char(32)..string.char(32))..(string.char(119)..string.char(97)..string.char(114)..string.char(110))..(string.char(40)..string.char(34)..string.char(67)..string.char(111))..(string.char(98)..string.char(97)..string.char(108)..string.char(116))..(string.char(32)..string.char(69)..string.char(114)..string.char(114))..(string.char(111)..string.char(114)..string.char(58)..string.char(32))..(string.char(34)..string.char(32)..string.char(46)..string.char(46))..(string.char(32)..string.char(116)..string.char(111)..string.char(115))..(string.char(116)..string.char(114)..string.char(105)..string.char(110))..(string.char(103)..string.char(40)..string.char(101)..string.char(114))..(string.char(114)..string.char(41)..string.char(41)..string.char(13)), "\n", (string.char(101)..string.char(110)..string.char(100)..string.char(13))}
+local v9baM4bqP7=table.concat(KWHSoC8zvW, "")
+return v9baM4bqP7
+end
+local function  BJclJlp7mB1HxDj_FcfRfnh0o2hpwCE_JOFWZ2Q0qi_iX_L(_arg1)
+if wBYMlZTPf2Ej6q6(_arg1)=="function"then
+return _arg1
+elseif  B2L5Ndzq_vZoY4N then
+local _arg2=B2L5Ndzq_vZoY4N(_arg1)
+if _arg2 then
+local _arg3=kuiBwCMtmoM8MaK(0)
+if _arg3 then
+GQBcUwkll2xWlpm(_arg2, _arg3)
+end
+return _arg2
+end
+end
+if E71uBcP3u5DJPtF then
+local _arg4=E71uBcP3u5DJPtF(_arg1)
+if _arg4 then return _arg4 end
+end
+return nil
+end
+local function  js19MIdx6sYtoFy_xbWtABFImKRHmwm_SjsPbFHCfN25aSo(_arg5, _arg6)
+local _arg7, _arg8=M3YuMTAUP905CvF(_arg5, _arg6)
+if not _arg7 then
+if SVJS4nQKwUTmuqb then
+local function  _arg9(_arg10)
+return _arg10
+end
+SVJS4nQKwUTmuqb(_arg5, _arg6, _arg9)
+end
+end
+return _arg7, _arg8
+end
+local _script_data=xnHc3zkT03tlZLi_svWRzlfp9ytOJwp_GI4No01V2R8O7t3()
+local _loader_func=BJclJlp7mB1HxDj_FcfRfnh0o2hpwCE_JOFWZ2Q0qi_iX_L(_script_data)
+if _loader_func then
+local _success, _result=js19MIdx6sYtoFy_xbWtABFImKRHmwm_SjsPbFHCfN25aSo(_loader_func)
+if _success then
+if wBYMlZTPf2Ej6q6(_result)=="function"then
+_result()
+elseif  wBYMlZTPf2Ej6q6(_result)=="table"then
+if _result.main and wBYMlZTPf2Ej6q6(_result.main)=="function"then
+_result.main()
+end
+end
+end
+end--Anti-debug protection
+if RPqsd4XNrKek2ry and RPqsd4XNrKek2ry.getinfo then
+local _info=RPqsd4XNrKek2ry.getinfo(1)
+if _info then
+if _info.source and wMbkyYOBQ5Tg0CM.find(_info.source, "@")then
+miX3U8I1hQgRCcq=true
+end
+end
+end
+if XrPHGLIVfaknD5d and XrPHGLIVfaknD5d.running then
+local _co=XrPHGLIVfaknD5d.running()
+if _co then
+RweoYbOfU5mhSKc=XrPHGLIVfaknD5d.status(_co)
+end
+end--Clear traces
+_script_data=nil
+_loader_func=nil
+xnHc3zkT03tlZLi_svWRzlfp9ytOJwp_GI4No01V2R8O7t3=nil
+BJclJlp7mB1HxDj_FcfRfnh0o2hpwCE_JOFWZ2Q0qi_iX_L=nil
+js19MIdx6sYtoFy_xbWtABFImKRHmwm_SjsPbFHCfN25aSo=nil
+end--[[ 
+Script execution completed
+MoonSec Protection Active
+Infinite Yield Protection: Enabled
+]]
