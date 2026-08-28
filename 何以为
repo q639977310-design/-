@@ -1,0 +1,634 @@
+local Players = game:GetService("Players")
+local HttpService = game:GetService("HttpService")
+local UserInputService = game:GetService("UserInputService")
+
+local LocalPlayer = Players.LocalPlayer
+
+local Config = {
+    MaxDepth = 8,
+    OutputFormat = "json",
+    FileName = "Roblox_Game_Analysis.json",
+    IncludeAttributes = true,
+    IncludeValues = true,
+    IncludeRemotes = true,
+    IncludeScripts = true,
+    IncludeProperties = true,
+    MaxObjects = 50000
+}
+
+local Results = {}
+local ObjectCount = 0
+local Scanning = false
+local StopScan = false
+
+local function safeCall(fn, default)
+    local ok, result = pcall(fn)
+    if ok then
+        return result
+    end
+    return default
+end
+
+local function getFullName(obj)
+    return safeCall(function()
+        return obj:GetFullName()
+    end, obj.Name)
+end
+
+local function serializeValue(value)
+    local t = typeof(value)
+
+    if t == "Vector2" then
+        return {
+            Type = t,
+            X = value.X,
+            Y = value.Y
+        }
+    elseif t == "Vector3" then
+        return {
+            Type = t,
+            X = value.X,
+            Y = value.Y,
+            Z = value.Z
+        }
+    elseif t == "Color3" then
+        return {
+            Type = t,
+            R = value.R,
+            G = value.G,
+            B = value.B
+        }
+    elseif t == "CFrame" then
+        local components = {value:GetComponents()}
+        return {
+            Type = t,
+            Components = components
+        }
+    elseif t == "UDim" then
+        return {
+            Type = t,
+            Scale = value.Scale,
+            Offset = value.Offset
+        }
+    elseif t == "UDim2" then
+        return {
+            Type = t,
+            XScale = value.X.Scale,
+            XOffset = value.X.Offset,
+            YScale = value.Y.Scale,
+            YOffset = value.Y.Offset
+        }
+    elseif t == "BrickColor" then
+        return {
+            Type = t,
+            Number = value.Number,
+            Name = value.Name
+        }
+    elseif t == "EnumItem" then
+        return {
+            Type = t,
+            Name = value.Name,
+            EnumType = tostring(value.EnumType)
+        }
+    elseif t == "Instance" then
+        return {
+            Type = t,
+            Path = safeCall(function()
+                return value:GetFullName()
+            end, tostring(value))
+        }
+    elseif t == "table" then
+        return value
+    elseif t == "string" or t == "number" or t == "boolean" then
+        return value
+    end
+
+    return tostring(value)
+end
+
+local function getAttributes(obj)
+    if not Config.IncludeAttributes then
+        return nil
+    end
+
+    local attributes = {}
+
+    local ok, data = pcall(function()
+        return obj:GetAttributes()
+    end)
+
+    if not ok then
+        return attributes
+    end
+
+    for name, value in pairs(data) do
+        attributes[name] = serializeValue(value)
+    end
+
+    return attributes
+end
+
+local function getValue(obj)
+    if not Config.IncludeValues then
+        return nil
+    end
+
+    local supported = {
+        StringValue = true,
+        IntValue = true,
+        NumberValue = true,
+        BoolValue = true,
+        ObjectValue = true,
+        Vector3Value = true,
+        Vector2Value = true,
+        CFrameValue = true,
+        Color3Value = true,
+        BrickColorValue = true,
+        RayValue = true
+    }
+
+    if not supported[obj.ClassName] then
+        return nil
+    end
+
+    local ok, value = pcall(function()
+        return obj.Value
+    end)
+
+    if not ok then
+        return nil
+    end
+
+    return serializeValue(value)
+end
+
+local function getBasicProperties(obj)
+    if not Config.IncludeProperties then
+        return nil
+    end
+
+    local data = {}
+
+    local properties = {
+        "Archivable",
+        "Enabled",
+        "Visible",
+        "Active",
+        "Anchored",
+        "CanCollide",
+        "CanTouch",
+        "CanQuery",
+        "Transparency",
+        "Reflectance",
+        "Massless",
+        "CastShadow",
+        "Material",
+        "Size",
+        "Position",
+        "Orientation",
+        "AssemblyLinearVelocity",
+        "AssemblyAngularVelocity",
+        "WalkSpeed",
+        "JumpPower",
+        "Health",
+        "MaxHealth",
+        "DisplayName",
+        "Text",
+        "TextSize",
+        "TextColor3",
+        "BackgroundColor3",
+        "BackgroundTransparency",
+        "Image",
+        "ImageTransparency"
+    }
+
+    for _, property in ipairs(properties) do
+        local ok, value = pcall(function()
+            return obj[property]
+        end)
+
+        if ok then
+            local serialized = serializeValue(value)
+
+            if serialized ~= nil then
+                data[property] = serialized
+            end
+        end
+    end
+
+    return data
+end
+
+local function scanObject(obj, depth, parent)
+    if StopScan then
+        return
+    end
+
+    if ObjectCount >= Config.MaxObjects then
+        return
+    end
+
+    ObjectCount += 1
+
+    local entry = {
+        Name = safeCall(function()
+            return obj.Name
+        end, "?"),
+
+        ClassName = safeCall(function()
+            return obj.ClassName
+        end, "?"),
+
+        FullName = getFullName(obj),
+
+        Depth = depth
+    }
+
+    if Config.IncludeAttributes then
+        entry.Attributes = getAttributes(obj)
+    end
+
+    if Config.IncludeValues then
+        local value = getValue(obj)
+
+        if value ~= nil then
+            entry.Value = value
+        end
+    end
+
+    if Config.IncludeProperties then
+        entry.Properties = getBasicProperties(obj)
+    end
+
+    if Config.IncludeRemotes then
+        if obj:IsA("RemoteEvent") then
+            entry.RemoteType = "RemoteEvent"
+        elseif obj:IsA("RemoteFunction") then
+            entry.RemoteType = "RemoteFunction"
+        elseif obj:IsA("UnreliableRemoteEvent") then
+            entry.RemoteType = "UnreliableRemoteEvent"
+        end
+    end
+
+    if Config.IncludeScripts then
+        if obj:IsA("Script") then
+            entry.ScriptType = "Script"
+        elseif obj:IsA("LocalScript") then
+            entry.ScriptType = "LocalScript"
+        elseif obj:IsA("ModuleScript") then
+            entry.ScriptType = "ModuleScript"
+        end
+    end
+
+    table.insert(Results, entry)
+
+    if depth >= Config.MaxDepth then
+        return
+    end
+
+    local children = safeCall(function()
+        return obj:GetChildren()
+    end, {})
+
+    for _, child in ipairs(children) do
+        if StopScan then
+            break
+        end
+
+        scanObject(child, depth + 1, obj)
+
+        if ObjectCount % 100 == 0 then
+            task.wait()
+        end
+    end
+end
+
+local function generateOutput()
+    local data = {
+        Metadata = {
+            GeneratedAt = os.date("%Y-%m-%d %H:%M:%S"),
+            Player = LocalPlayer and LocalPlayer.Name or "Unknown",
+            UserId = LocalPlayer and LocalPlayer.UserId or 0,
+            MaxDepth = Config.MaxDepth,
+            ObjectCount = ObjectCount
+        },
+
+        Configuration = Config,
+
+        Objects = Results
+    }
+
+    return data
+end
+
+local function saveFile()
+    if typeof(writefile) ~= "function" then
+        return false, "当前执行环境没有 writefile"
+    end
+
+    local data = generateOutput()
+
+    local ok, encoded = pcall(function()
+        return HttpService:JSONEncode(data)
+    end)
+
+    if not ok then
+        return false, "JSON 编码失败"
+    end
+
+    local success, err = pcall(function()
+        writefile(Config.FileName, encoded)
+    end)
+
+    if not success then
+        return false, tostring(err)
+    end
+
+    return true, Config.FileName
+end
+
+local function clearResults()
+    table.clear(Results)
+    ObjectCount = 0
+    StopScan = false
+end
+
+local function startScan(root)
+    if Scanning then
+        return
+    end
+
+    Scanning = true
+    StopScan = false
+
+    clearResults()
+
+    task.spawn(function()
+        scanObject(root, 0, nil)
+
+        Scanning = false
+
+        if not StopScan then
+            local success, result = saveFile()
+
+            if success then
+                print("[GameAnalyzer] 导出完成:", result)
+                print("[GameAnalyzer] 对象数量:", ObjectCount)
+            else
+                warn("[GameAnalyzer] 导出失败:", result)
+            end
+        else
+            print("[GameAnalyzer] 扫描已停止")
+        end
+    end)
+end
+
+local function stopScan()
+    StopScan = true
+end
+
+local function exportAgain()
+    local success, result = saveFile()
+
+    if success then
+        print("[GameAnalyzer] 已重新导出:", result)
+    else
+        warn("[GameAnalyzer] 导出失败:", result)
+    end
+end
+
+local function createGUI()
+    local gui = Instance.new("ScreenGui")
+    gui.Name = "GameAnalyzerGUI"
+    gui.ResetOnSpawn = false
+
+    pcall(function()
+        gui.Parent = game:GetService("CoreGui")
+    end)
+
+    if not gui.Parent then
+        gui.Parent = LocalPlayer:WaitForChild("PlayerGui")
+    end
+
+    local main = Instance.new("Frame")
+    main.Size = UDim2.fromOffset(330, 390)
+    main.Position = UDim2.new(0.5, -165, 0.5, -195)
+    main.BackgroundColor3 = Color3.fromRGB(25, 25, 30)
+    main.BorderSizePixel = 0
+    main.Parent = gui
+
+    local corner = Instance.new("UICorner")
+    corner.CornerRadius = UDim.new(0, 14)
+    corner.Parent = main
+
+    local title = Instance.new("TextLabel")
+    title.Size = UDim2.new(1, -50, 0, 45)
+    title.Position = UDim2.fromOffset(15, 5)
+    title.BackgroundTransparency = 1
+    title.Text = "Roblox Game Analyzer"
+    title.TextColor3 = Color3.new(1, 1, 1)
+    title.TextSize = 20
+    title.Font = Enum.Font.GothamBold
+    title.TextXAlignment = Enum.TextXAlignment.Left
+    title.Parent = main
+
+    local close = Instance.new("TextButton")
+    close.Size = UDim2.fromOffset(35, 35)
+    close.Position = UDim2.new(1, -42, 0, 10)
+    close.Text = "×"
+    close.TextSize = 25
+    close.TextColor3 = Color3.new(1, 1, 1)
+    close.BackgroundTransparency = 1
+    close.Parent = main
+
+    close.MouseButton1Click:Connect(function()
+        gui:Destroy()
+    end)
+
+    local status = Instance.new("TextLabel")
+    status.Size = UDim2.new(1, -30, 0, 35)
+    status.Position = UDim2.fromOffset(15, 55)
+    status.BackgroundTransparency = 1
+    status.Text = "状态：等待扫描"
+    status.TextColor3 = Color3.fromRGB(190, 190, 190)
+    status.TextSize = 14
+    status.Font = Enum.Font.Gotham
+    status.TextXAlignment = Enum.TextXAlignment.Left
+    status.Parent = main
+
+    local depthLabel = Instance.new("TextLabel")
+    depthLabel.Size = UDim2.new(1, -30, 0, 25)
+    depthLabel.Position = UDim2.fromOffset(15, 95)
+    depthLabel.BackgroundTransparency = 1
+    depthLabel.Text = "最大遍历深度"
+    depthLabel.TextColor3 = Color3.new(1, 1, 1)
+    depthLabel.TextSize = 14
+    depthLabel.Font = Enum.Font.Gotham
+    depthLabel.TextXAlignment = Enum.TextXAlignment.Left
+    depthLabel.Parent = main
+
+    local depthBox = Instance.new("TextBox")
+    depthBox.Size = UDim2.new(1, -30, 0, 38)
+    depthBox.Position = UDim2.fromOffset(15, 120)
+    depthBox.BackgroundColor3 = Color3.fromRGB(40, 40, 48)
+    depthBox.BorderSizePixel = 0
+    depthBox.Text = tostring(Config.MaxDepth)
+    depthBox.TextColor3 = Color3.new(1, 1, 1)
+    depthBox.TextSize = 15
+    depthBox.Font = Enum.Font.Gotham
+    depthBox.ClearTextOnFocus = false
+    depthBox.Parent = main
+
+    local depthCorner = Instance.new("UICorner")
+    depthCorner.CornerRadius = UDim.new(0, 8)
+    depthCorner.Parent = depthBox
+
+    local scan = Instance.new("TextButton")
+    scan.Size = UDim2.new(1, -30, 0, 45)
+    scan.Position = UDim2.fromOffset(15, 175)
+    scan.BackgroundColor3 = Color3.fromRGB(55, 55, 65)
+    scan.BorderSizePixel = 0
+    scan.Text = "开始扫描全部内容"
+    scan.TextColor3 = Color3.new(1, 1, 1)
+    scan.TextSize = 15
+    scan.Font = Enum.Font.GothamBold
+    scan.Parent = main
+
+    local scanCorner = Instance.new("UICorner")
+    scanCorner.CornerRadius = UDim.new(0, 9)
+    scanCorner.Parent = scan
+
+    local stop = Instance.new("TextButton")
+    stop.Size = UDim2.new(1, -30, 0, 45)
+    stop.Position = UDim2.fromOffset(15, 230)
+    stop.BackgroundColor3 = Color3.fromRGB(55, 55, 65)
+    stop.BorderSizePixel = 0
+    stop.Text = "停止扫描"
+    stop.TextColor3 = Color3.new(1, 1, 1)
+    stop.TextSize = 15
+    stop.Font = Enum.Font.GothamBold
+    stop.Parent = main
+
+    local stopCorner = Instance.new("UICorner")
+    stopCorner.CornerRadius = UDim.new(0, 9)
+    stopCorner.Parent = stop
+
+    local export = Instance.new("TextButton")
+    export.Size = UDim2.new(1, -30, 0, 45)
+    export.Position = UDim2.fromOffset(15, 285)
+    export.BackgroundColor3 = Color3.fromRGB(55, 55, 65)
+    export.BorderSizePixel = 0
+    export.Text = "重新导出"
+    export.TextColor3 = Color3.new(1, 1, 1)
+    export.TextSize = 15
+    export.Font = Enum.Font.GothamBold
+    export.Parent = main
+
+    local exportCorner = Instance.new("UICorner")
+    exportCorner.CornerRadius = UDim.new(0, 9)
+    exportCorner.Parent = export
+
+    local info = Instance.new("TextLabel")
+    info.Size = UDim2.new(1, -30, 0, 40)
+    info.Position = UDim2.fromOffset(15, 340)
+    info.BackgroundTransparency = 1
+    info.Text = "输出：" .. Config.FileName
+    info.TextColor3 = Color3.fromRGB(150, 150, 150)
+    info.TextSize = 12
+    info.Font = Enum.Font.Gotham
+    info.TextXAlignment = Enum.TextXAlignment.Left
+    info.Parent = main
+
+    scan.MouseButton1Click:Connect(function()
+        local depth = tonumber(depthBox.Text)
+
+        if depth then
+            Config.MaxDepth = math.clamp(math.floor(depth), 1, 30)
+        end
+
+        if Scanning then
+            status.Text = "状态：正在扫描..."
+            return
+        end
+
+        status.Text = "状态：扫描中..."
+
+        task.spawn(function()
+            startScan(game)
+
+            while Scanning do
+                status.Text = "状态：扫描中 | 对象：" .. tostring(ObjectCount)
+                task.wait(0.2)
+            end
+
+            if StopScan then
+                status.Text = "状态：扫描已停止"
+            else
+                status.Text = "状态：完成 | 对象：" .. tostring(ObjectCount)
+            end
+        end)
+    end)
+
+    stop.MouseButton1Click:Connect(function()
+        stopScan()
+        status.Text = "状态：正在停止..."
+    end)
+
+    export.MouseButton1Click:Connect(function()
+        local success, result = saveFile()
+
+        if success then
+            status.Text = "状态：导出成功"
+        else
+            status.Text = "状态：导出失败"
+            warn(result)
+        end
+    end)
+
+    local dragging = false
+    local dragStart
+    local startPos
+
+    title.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1
+            or input.UserInputType == Enum.UserInputType.Touch then
+
+            dragging = true
+            dragStart = input.Position
+            startPos = main.Position
+        end
+    end)
+
+    UserInputService.InputChanged:Connect(function(input)
+        if dragging and (
+            input.UserInputType == Enum.UserInputType.MouseMovement
+            or input.UserInputType == Enum.UserInputType.Touch
+        ) then
+            local delta = input.Position - dragStart
+
+            main.Position = UDim2.new(
+                startPos.X.Scale,
+                startPos.X.Offset + delta.X,
+                startPos.Y.Scale,
+                startPos.Y.Offset + delta.Y
+            )
+        end
+    end)
+
+    UserInputService.InputEnded:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1
+            or input.UserInputType == Enum.UserInputType.Touch then
+            dragging = false
+        end
+    end)
+
+    return gui
+end
+
+createGUI()
+
+print("================================")
+print(" Roblox Game Analyzer")
+print(" 通用客户端对象分析器")
+print(" GUI 已加载")
+print("================================")
