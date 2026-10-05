@@ -9,7 +9,6 @@ if type(CFG) ~= "table" then CFG = {} end
 G.MYQF_AutoShoot = CFG
 
 local DEFAULTS = {
-
     Master        = false,
     AttackPlayers = true,
     AttackZombies = true,
@@ -64,6 +63,18 @@ local DEFAULTS = {
     AntiShakeOffset    = false,
     AntiShakeOffsetTol = 0.6,
 
+    -- ===== AutoRepair 自动修复建筑 =====
+    RepairMaster      = false,
+    RepairOnlyMine    = true,
+    RepairOnlyDamaged = true,
+    RepairAutoEquip   = true,
+    RepairThreshold   = 95,
+    RepairInterval    = 45,
+    RepairMode        = 1,
+    RepairMaxDist     = 0,
+    RepairUnknown     = true,
+    RepairUnknownCap  = 6,
+
     FireInterval  = 0,
     NoUI          = false,
     Debug         = false,
@@ -98,7 +109,6 @@ local function getFireRE()
         return cachedRE
     end
     reTime = tick()
-
     if type(getNil) == "function" then
         local ok, r = pcall(getNil, "Fire", "RemoteEvent")
         if ok and typeof(r) == "Instance" and r:IsA("RemoteEvent") then
@@ -106,7 +116,6 @@ local function getFireRE()
             return r
         end
     end
-
     local spots = {}
     if lp.Character then spots[#spots + 1] = lp.Character end
     local bp = lp:FindFirstChild("Backpack")
@@ -119,7 +128,6 @@ local function getFireRE()
             end
         end
     end
-
     local found
     pcall(function()
         for _, d in ipairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
@@ -127,7 +135,6 @@ local function getFireRE()
         end
     end)
     if found then cachedRE, reFails = found, 0 return found end
-
     reFails = math.min(reFails + 1, #BACKOFF - 1)
     return cachedRE
 end
@@ -187,7 +194,6 @@ local function refreshZombies()
     table.clear(zCacheList)
     local root = zombieRoot()
     if not root then return end
-
     local function push(m)
         if not m:IsA("Model") then return end
         local hum = m:FindFirstChildOfClass("Humanoid")
@@ -196,7 +202,6 @@ local function refreshZombies()
             if part then zCacheList[#zCacheList + 1] = { Part = part, Model = m } end
         end
     end
-
     local direct = 0
     for _, m in ipairs(root:GetChildren()) do
         if m:IsA("Model") then direct = direct + 1 end
@@ -241,7 +246,6 @@ local function visible(part, model, camPos)
     if lp.Character then filterBuf[#filterBuf + 1] = lp.Character end
     if model and model.Parent then filterBuf[#filterBuf + 1] = model end
     rayParams.FilterDescendantsInstances = filterBuf
-
     local res = workspace:Raycast(camPos, part.Position - camPos, rayParams)
     if not res then return true end
     local inst = res.Instance
@@ -267,7 +271,6 @@ local function neutralizeShakeSources()
     pcall(function() containers[#containers + 1] = game:GetService("ReplicatedFirst") end)
     pcall(function() containers[#containers + 1] = lp:WaitForChild("PlayerScripts", 3) end)
     pcall(function() containers[#containers + 1] = lp:WaitForChild("PlayerGui", 3) end)
-
     for _, root in ipairs(containers) do
         pcall(function()
             for _, d in ipairs(root:GetDescendants()) do
@@ -299,24 +302,20 @@ local function antiShakeStep()
     local cam = getCam()
     if not cam then return end
     local raw = cam.CFrame
-
     local rootPos = nil
     pcall(function()
         local ch = lp.Character
         local rp = ch and ch:FindFirstChild("HumanoidRootPart")
         if rp then rootPos = rp.Position end
     end)
-
     if SHAKE.lastRaw == nil then
         SHAKE.lastRaw, SHAKE.base, SHAKE.lastD = raw, raw, nil
         SHAKE.lastRoot, SHAKE.baseFov, SHAKE.flip = rootPos, cam.FieldOfView, 0
         return
     end
-
     local d = raw.Position - SHAKE.lastRaw.Position
     local mag = d.Magnitude
     local isShake = false
-
     if mag > CFG.AntiShakeMaxAmp * 6 then
         SHAKE.base, SHAKE.flip = raw, 0
     elseif mag > 0.0015 and mag <= CFG.AntiShakeMaxAmp then
@@ -339,12 +338,9 @@ local function antiShakeStep()
     else
         SHAKE.flip = 0
     end
-
     if isShake then
         local base = SHAKE.base
-        if rootPos and SHAKE.lastRoot then
-            base = base + (rootPos - SHAKE.lastRoot)
-        end
+        if rootPos and SHAKE.lastRoot then base = base + (rootPos - SHAKE.lastRoot) end
         SHAKE.base = base
         pcall(function()
             if CFG.AntiShakeLockRotation then
@@ -356,7 +352,6 @@ local function antiShakeStep()
     else
         SHAKE.base = raw
     end
-
     if CFG.AntiShakeFOV then
         pcall(function()
             local fov = cam.FieldOfView
@@ -367,7 +362,6 @@ local function antiShakeStep()
             end
         end)
     end
-
     if CFG.AntiShakeOffset then
         pcall(function()
             local ch = lp.Character
@@ -377,43 +371,35 @@ local function antiShakeStep()
             end
         end)
     end
-
     SHAKE.lastRaw, SHAKE.lastD, SHAKE.lastRoot = raw, d, rootPos
 end
 
 local LOCKS = { active = {}, byModel = {}, pool = {} }
 local lockCount = 0
-
 local function quadOut(x) return 1 - (1 - x) * (1 - x) end
 
 local function makeCorner(parent, cornerIndex, thick)
     local ax, ay = 0, 0
     if cornerIndex == 2 or cornerIndex == 4 then ax = 1 end
     if cornerIndex == 3 or cornerIndex == 4 then ay = 1 end
-
     local f = Instance.new("Frame")
     f.Name = "C" .. tostring(cornerIndex)
     f.AnchorPoint = Vector2.new(ax, ay)
     f.BackgroundTransparency = 1
     f.BorderSizePixel = 0
     f.Parent = parent
-
     local h = Instance.new("Frame")
-    h.Name = "H"
-    h.BorderSizePixel = 0
+    h.Name = "H"; h.BorderSizePixel = 0
     h.AnchorPoint = Vector2.new(0, ay)
     h.Position = UDim2.new(0, 0, ay, 0)
     h.Size = UDim2.new(1, 0, 0, thick)
     h.Parent = f
-
     local v = Instance.new("Frame")
-    v.Name = "V"
-    v.BorderSizePixel = 0
+    v.Name = "V"; v.BorderSizePixel = 0
     v.AnchorPoint = Vector2.new(ax, 0)
     v.Position = UDim2.new(ax, 0, 0, 0)
     v.Size = UDim2.new(0, thick, 1, 0)
     v.Parent = f
-
     return f, h, v
 end
 
@@ -426,15 +412,12 @@ local function lockCreate()
     gui.ClipsDescendants = false
     gui.MaxDistance = CFG.LockMaxDistance
     gui.StudsOffset = Vector3.new(0, 0, 0)
-
-    local corners = {}
-    local arms = {}
+    local corners, arms = {}, {}
     for i = 1, 4 do
         local c, h, v = makeCorner(gui, i, CFG.LockThickness)
         corners[i] = c
         arms[i] = { h, v }
     end
-
     return { gui = gui, corners = corners, arms = arms,
              model = nil, part = nil, state = nil,
              t = 0, hold = 0, lost = 0, pulse = 0, alpha = 0 }
@@ -445,14 +428,11 @@ local function paintCorner(e, i, inset, armW, armH, color, alpha)
     local ax = (i == 2 or i == 4) and 1 or 0
     local ay = (i == 3 or i == 4) and 1 or 0
     c.Size = UDim2.new(0, armW, 0, armH)
-    c.Position = UDim2.new(ax, ax == 0 and inset or -inset,
-                           ay, ay == 0 and inset or -inset)
+    c.Position = UDim2.new(ax, ax == 0 and inset or -inset, ay, ay == 0 and inset or -inset)
     local trans = 1 - alpha
     local h, v = e.arms[i][1], e.arms[i][2]
-    h.BackgroundColor3 = color
-    h.BackgroundTransparency = trans
-    v.BackgroundColor3 = color
-    v.BackgroundTransparency = trans
+    h.BackgroundColor3 = color; h.BackgroundTransparency = trans
+    v.BackgroundColor3 = color; v.BackgroundTransparency = trans
 end
 
 local function lockPaint(e)
@@ -464,41 +444,24 @@ local function lockPaint(e)
                           CFG.LockBoxW * (CFG.LockArmLong + (CFG.LockArmShort - CFG.LockArmLong) * eased))
     local armH = math.max(CFG.LockThickness * 2,
                           CFG.LockBoxH * (CFG.LockArmLong + (CFG.LockArmShort - CFG.LockArmLong) * eased))
-
     local color
-    if e.state == "KILLED" then
-        color = CFG.LockColorKill
-    elseif e.state == "LOST" then
-        color = CFG.LockColorLost
-    elseif p < 0.5 then
-        color = CFG.LockColorFind:lerp(CFG.LockColorLock, p / 0.5)
-    else
-        color = CFG.LockColorLock:lerp(CFG.LockColorDone, (p - 0.5) / 0.5)
-    end
-
+    if e.state == "KILLED" then color = CFG.LockColorKill
+    elseif e.state == "LOST" then color = CFG.LockColorLost
+    elseif p < 0.5 then color = CFG.LockColorFind:lerp(CFG.LockColorLock, p / 0.5)
+    else color = CFG.LockColorLock:lerp(CFG.LockColorDone, (p - 0.5) / 0.5) end
     local alpha = e.alpha or 0
-    for i = 1, 4 do
-        paintCorner(e, i, inset, armW, armH, color, alpha)
-    end
+    for i = 1, 4 do paintCorner(e, i, inset, armW, armH, color, alpha) end
 end
 
 local function lockSetState(e, s, progress)
     e.state = s
     e.t = 0
     if progress ~= nil then e.progress = progress end
-    if s == "ACQUIRE" then
-        e.progress = 0
-        e.alpha = 0
-    elseif s == "LOCKING" then
-        if e.progress == nil then e.progress = 0 end
-    elseif s == "LOCKED" then
-        e.progress = 1
-        e.lockedAt = e.lockedAt or tick()
-    elseif s == "LOST" then
-        e.alpha = CFG.LockAlpha
-    elseif s == "KILLED" then
-        e.alpha = CFG.LockAlpha
-    end
+    if s == "ACQUIRE" then e.progress = 0; e.alpha = 0
+    elseif s == "LOCKING" then if e.progress == nil then e.progress = 0 end
+    elseif s == "LOCKED" then e.progress = 1; e.lockedAt = e.lockedAt or tick()
+    elseif s == "LOST" then e.alpha = CFG.LockAlpha
+    elseif s == "KILLED" then e.alpha = CFG.LockAlpha end
 end
 
 local function lockAcquire()
@@ -527,12 +490,8 @@ local function lockRelease(e)
 end
 
 local function lockDestroyAll()
-    for _, e in ipairs(LOCKS.active) do
-        pcall(function() e.gui:Destroy() end)
-    end
-    for _, e in ipairs(LOCKS.pool) do
-        pcall(function() e.gui:Destroy() end)
-    end
+    for _, e in ipairs(LOCKS.active) do pcall(function() e.gui:Destroy() end) end
+    for _, e in ipairs(LOCKS.pool) do pcall(function() e.gui:Destroy() end) end
     table.clear(LOCKS.active)
     table.clear(LOCKS.byModel)
     table.clear(LOCKS.pool)
@@ -541,7 +500,6 @@ end
 
 local function lockMark(model, part)
     if not model or not part or not model.Parent then return nil end
-
     local e = LOCKS.byModel[model]
     if e then
         e.hold = CFG.LockHoldTime
@@ -549,7 +507,6 @@ local function lockMark(model, part)
         if e.state == "LOST" then lockSetState(e, "LOCKING", 0) end
         return e
     end
-
     while lockCount >= CFG.LockMaxCount and #LOCKS.active > 0 do
         local victim
         for i = 1, #LOCKS.active do
@@ -557,7 +514,6 @@ local function lockMark(model, part)
         end
         lockRelease(victim or LOCKS.active[1])
     end
-
     e = lockAcquire()
     e.model, e.part = model, part
     pcall(function()
@@ -577,11 +533,9 @@ end
 local function lockTick(e, dt, camPos)
     local m, p = e.model, e.part
     if not m or not m.Parent or not p or not p.Parent then return false end
-
     local hum = m:FindFirstChildOfClass("Humanoid")
     local dead = hum and hum.Health <= 0
     local far = (p.Position - camPos).Magnitude > CFG.LockMaxDistance
-
     if dead then
         if e.state ~= "KILLED" then lockSetState(e, "KILLED") end
         e.t = e.t + dt
@@ -594,47 +548,37 @@ local function lockTick(e, dt, camPos)
         lockPaint(e)
         return true
     end
-
     local blocked = far or (CFG.LockWallCheck and not visible(p, m, camPos))
     if blocked then
         e.lost = e.lost + dt
-        if e.lost >= CFG.LockLoseTime and e.state ~= "LOST" then
-            lockSetState(e, "LOST")
-        end
+        if e.lost >= CFG.LockLoseTime and e.state ~= "LOST" then lockSetState(e, "LOST") end
     else
         e.lost = 0
         if e.state == "LOST" then lockSetState(e, "LOCKING", 0) end
     end
-
     if e.state ~= "LOST" then
         e.hold = e.hold - dt
         if e.hold <= 0 then lockSetState(e, "LOST") end
     end
-
     e.t = e.t + dt
-
     if e.state == "ACQUIRE" then
         e.alpha = CFG.LockAlpha * math.clamp(e.t / math.max(CFG.LockAcquireTime, 0.01), 0, 1)
         if e.t >= CFG.LockAcquireTime then lockSetState(e, "LOCKING", 0) end
-
     elseif e.state == "LOCKING" then
         e.progress = math.clamp(e.t / math.max(CFG.LockShrinkTime, 0.01), 0, 1)
         e.alpha = CFG.LockAlpha
         if e.progress >= 1 then lockSetState(e, "LOCKED", 1) end
-
     elseif e.state == "LOCKED" then
         e.alpha = CFG.LockAlpha
         if CFG.LockPulse then
             e.pulse = e.pulse + dt * 2.2
             e.alpha = math.clamp(CFG.LockAlpha + math.sin(e.pulse) * 0.10, 0, 1)
         end
-
     elseif e.state == "LOST" then
         e.progress = math.max(0, (e.progress or 0) - dt * 2.5)
         e.alpha = math.max(0, (e.alpha or 0) - dt / 0.30 * CFG.LockAlpha)
         if e.alpha <= 0.01 then return false end
     end
-
     lockPaint(e)
     return true
 end
@@ -645,7 +589,6 @@ local function lockUpdate(dt, camPos)
         lockCount = 0
         return
     end
-
     local show = CFG.AdvancedUI
     for i = #LOCKS.active, 1, -1 do
         local e = LOCKS.active[i]
@@ -665,16 +608,13 @@ local preMarks = {}
 
 local function step()
     if not CFG.Master then return end
-
     local cam = getCam()
     if not cam then return end
     local camPos  = cam.CFrame.Position
     local camLook = cam.CFrame.LookVector
     lastCamPos = camPos
-
     collectTargets()
     statusTargets = #targets
-
     table.clear(scored)
     for _, t in ipairs(targets) do
         local part = t.Part
@@ -683,21 +623,16 @@ local function step()
             local dist = delta.Magnitude
             if dist > 0.1 and dist <= CFG.MaxDistance then
                 local s
-                if CFG.AimMode == "Distance" then
-                    s = dist
-                else
-                    s = math.deg(math.acos(math.clamp(camLook:Dot(delta.Unit), -1, 1)))
-                end
+                if CFG.AimMode == "Distance" then s = dist
+                else s = math.deg(math.acos(math.clamp(camLook:Dot(delta.Unit), -1, 1))) end
                 scored[#scored + 1] = { s = s, t = t, d = dist }
             end
         end
     end
     table.sort(scored, function(a, b) return a.s < b.s end)
-
     local re = getFireRE()
     if not re then return end
     if CFG.FireInterval > 0 and tick() - lastFire < CFG.FireInterval then return end
-
     table.clear(preMarks)
     local maxShots = math.max(1, CFG.MaxShotsPerFrame)
     local marked = 0
@@ -706,21 +641,16 @@ local function step()
         local t = scored[i].t
         if visible(t.Part, t.Model, camPos) then
             local e = lockMark(t.Model, t.Part)
-            if e then
-                preMarks[#preMarks + 1] = { e = e, t = t, d = scored[i].d }
-            end
+            if e then preMarks[#preMarks + 1] = { e = e, t = t, d = scored[i].d } end
             marked = marked + 1
         end
     end
-
     local now = tick()
     for _, mk in ipairs(preMarks) do
         local e = mk.e
         if CFG.LockBeforeFire then
             if e.state ~= "LOCKED" then
-
             elseif (now - (e.lockedAt or 0)) < CFG.LockFireDelay then
-
             else
                 local pos = mk.t.Part.Position
                 local arg2 = CFG.SecondArg
@@ -773,7 +703,6 @@ end)
 local function stopAll()
     if not RUNTIME.running then return end
     RUNTIME.running = false
-
     if RUNTIME.shakeBound then
         pcall(function() RS:UnbindFromRenderStep("MYQF_AntiShake") end)
         RUNTIME.shakeBound = false
@@ -782,12 +711,225 @@ local function stopAll()
         pcall(function() if c and c.Connected then c:Disconnect() end end)
     end
     table.clear(RUNTIME.conns)
-
     resetShake()
     lockDestroyAll()
     dbg("已完全卸载")
 end
 G.MYQF_AutoShoot_Stop = stopAll
+
+-- =========================================================
+-- ============ AutoRepair 自动修复建筑 模块 ================
+-- =========================================================
+local REPAIR = { targets = 0, hammer = false, skipped = 0, unknown = 0, tries = {} }
+
+local function rnum(v)
+    if typeof(v) == "number" then return v end
+    if typeof(v) == "Instance" and v:IsA("ValueBase") then
+        local ok, val = pcall(function() return v.Value end)
+        if ok and typeof(val) == "number" then return val end
+    end
+end
+
+local HP_NAMES  = { "Health", "HP", "HealthValue", "Hp", "Durability",
+                    "StructureHealth", "BarricadeHealth", "CurrentHealth" }
+local MAX_NAMES = { "MaxHealth", "MaxHP", "MaxHealthValue", "MaxHp", "MaxDurability",
+                    "MaxStructureHealth", "MaxBarricadeHealth", "BaseHealth" }
+local OWN_NAMES = { "Owner", "Player", "Creator", "OwnerName" }
+
+local function rfindVal(obj, names)
+    for _, n in ipairs(names) do
+        local v = obj:FindFirstChild(n)
+        if v then return v end
+    end
+    for _, d in ipairs(obj:GetDescendants()) do
+        for _, n in ipairs(names) do if d.Name == n then return d end end
+    end
+end
+
+-- 模糊扫描：找名字里含 health / hp / durab / struct 的数值容器
+local function fscan(obj, keyword)
+    local lk = string.lower(keyword)
+    for _, d in ipairs(obj:GetDescendants()) do
+        if d:IsA("ValueBase") then
+            local n = string.lower(d.Name)
+            if string.find(n, lk, 1, true) then
+                local v = rnum(d)
+                if v then return v end
+            end
+        end
+    end
+    for _, d in ipairs(obj:GetDescendants()) do
+        if d:IsA("ValueBase") then
+            local n = string.lower(d.Name)
+            if string.find(n, lk, 1, true) then
+                local ok, val = pcall(function() return d.Value end)
+                if ok and typeof(val) == "number" then return val end
+            end
+        end
+    end
+end
+
+local function rhpRatio(obj)
+    local c = rnum(obj:GetAttribute("Health")) or rnum(rfindVal(obj, HP_NAMES)) or fscan(obj, "health")
+    local m = rnum(obj:GetAttribute("MaxHealth")) or rnum(rfindVal(obj, MAX_NAMES))
+    if not c then c = fscan(obj, "hp") end
+    if not m then m = fscan(obj, "maxhealth") end
+    if c and m and m > 0 then return c / m, true end
+    -- 只有当前值、没有最大值：尝试用 Attribute 里的
+    if c then
+        local ma = rnum(obj:GetAttribute("MaxHealth")) or rnum(obj:GetAttribute("MaxHP"))
+        if ma and ma > 0 then return c / ma, true end
+    end
+    return nil, false
+end
+
+local function rpos(obj)
+    if obj:IsA("Model") then
+        if obj.PrimaryPart then return obj.PrimaryPart.Position end
+        local p = obj:FindFirstChildWhichIsA("BasePart", true)
+        if p then return p.Position end
+    elseif obj:IsA("BasePart") then return obj.Position end
+end
+
+local function getHammer()
+    local ch = lp.Character
+    local h = ch and ch:FindFirstChild("Hammer")
+    if h then return h end
+    local bp = lp:FindFirstChild("Backpack")
+    return bp and bp:FindFirstChild("Hammer")
+end
+
+local function getBuildRE()
+    local h = getHammer()
+    if not h then return nil end
+    local r = h:FindFirstChild("build")
+    if r and r:IsA("RemoteEvent") then return r end
+    for _, d in ipairs(h:GetDescendants()) do
+        if d:IsA("RemoteEvent") and d.Name == "build" then return d end
+    end
+end
+
+local function repairEquip()
+    if not CFG.RepairAutoEquip then return end
+    local ch = lp.Character
+    if not ch or ch:FindFirstChild("Hammer") then return end
+    local bp = lp:FindFirstChild("Backpack")
+    local tool = bp and bp:FindFirstChild("Hammer")
+    local hum = ch:FindFirstChildOfClass("Humanoid")
+    if tool and hum then pcall(function() hum:EquipTool(tool) end) end
+end
+
+local function risMine(o)
+    if not CFG.RepairOnlyMine then return true end
+    if o.Name:find(lp.Name, 1, true) then return true end
+    local ow = o:GetAttribute("Owner") or rfindVal(o, OWN_NAMES)
+    if ow and not rnum(ow) then
+        local ok, val = pcall(function() return ow.Value end)
+        if ok then ow = val end
+    end
+    if ow then
+        return tostring(ow) == lp.Name or tostring(ow) == tostring(lp.UserId)
+    end
+    return false
+end
+
+local function rcollect()
+    local out = {}
+    local g = workspace:FindFirstChild("Game")
+    local f = g and g:FindFirstChild("Barricades")
+    if not f then return out end
+    local root = rpos(lp.Character) or Vector3.zero
+    local thr = (CFG.RepairThreshold or 95) / 100
+    local maxD = CFG.RepairMaxDist or 0
+    REPAIR.skipped = 0
+    REPAIR.unknown = 0
+    local cap = CFG.RepairUnknownCap or 6
+    for _, o in ipairs(f:GetChildren()) do
+        if risMine(o) then
+            local r, has = rhpRatio(o)
+            local push = false
+            if has then
+                if r < 0.999 then
+                    -- 开了只修受损：还要低于阈值才修
+                    if (not CFG.RepairOnlyDamaged) or (r < thr) then
+                        push = true
+                    else
+                        REPAIR.skipped = REPAIR.skipped + 1
+                    end
+                else
+                    -- 满血(≥99.9%)直接跳过，不修
+                    REPAIR.skipped = REPAIR.skipped + 1
+                end
+            elseif CFG.RepairUnknown then
+                -- 读不到血量：多半是刚放出来的新建筑，照修
+                -- 但同一建筑连续修超过上限就不再重复（防刷屏）
+                local used = REPAIR.tries[o] or 0
+                if used < cap then
+                    push = true
+                    REPAIR.unknown = REPAIR.unknown + 1
+                end
+            end
+            if push then
+                local p = rpos(o)
+                if maxD <= 0 or (p and (p - root).Magnitude <= maxD) then
+                    out[#out + 1] = o
+                end
+            end
+        end
+    end
+    -- 清理已消失建筑的计数
+    for k in pairs(REPAIR.tries) do
+        if not k.Parent then REPAIR.tries[k] = nil end
+    end
+    return out
+end
+
+local function rfire(re, obj)
+    local mode = CFG.RepairMode or 1
+    if mode == 1 then re:FireServer("Heal", nil, obj)
+    elseif mode == 2 then re:FireServer("Heal", obj)
+    else re:FireServer("Heal") end
+end
+
+local function repairStep()
+    repairEquip()
+    local re = getBuildRE()
+    if not re then REPAIR.targets, REPAIR.hammer = -1, false return end
+    REPAIR.hammer = true
+    local list = rcollect()
+    REPAIR.targets = #list
+    if #list == 0 then return end
+    local interval = math.max(0.1, (CFG.RepairInterval or 45) / 100)
+    local cap = CFG.RepairUnknownCap or 6
+    for _, o in ipairs(list) do
+        if not CFG.RepairMaster then break end
+        if o and o.Parent then
+            -- 开火前复查血量：满血立即停手；读不到血量按新建筑处理
+            local r, has = rhpRatio(o)
+            if has then
+                if r < 0.999 then
+                    REPAIR.tries[o] = nil
+                    safe(rfire, re, o)
+                    task.wait(interval)
+                end
+            elseif CFG.RepairUnknown then
+                local used = REPAIR.tries[o] or 0
+                if used < cap then
+                    REPAIR.tries[o] = used + 1
+                    safe(rfire, re, o)
+                    task.wait(interval)
+                end
+            end
+        end
+    end
+end
+
+task.spawn(function()
+    while RUNTIME.running do
+        if CFG.RepairMaster then safe(repairStep) end
+        task.wait(0.35)
+    end
+end)
 
 local CoreGui = game:GetService("CoreGui")
 local TweenService = game:GetService("TweenService")
@@ -805,6 +947,12 @@ local I18N = {
         Master = "Total Attack", AttackPlayers = "Attack Players", AttackZombies = "Attack Zombies",
         TeamCheck = "Skip Teammates", WallCheck = "Wall Check",
         AdvancedUI = "Tactical Lock HUD", LockBeforeFire = "Lock Then Fire",
+
+        RepairMaster = "Auto Repair", RepairOnlyMine = "Only Mine",
+        RepairOnlyDamaged = "Only Damaged", RepairAutoEquip = "Auto Equip Hammer",
+        RepairUnknown = "Heal No-HP (New)", RepairUnknownCap = "No-HP Max Tries",
+        RepairIntv = "Interval x0.01s", RepairThr = "Damage Thresh %",
+        RepairMode = "Arg Mode", RepairDist = "Max Dist",
     },
     cn = {
         HideShow = "隐藏/显示", LockGui = "锁定Gui", ResetUIPos = "重置界面位置",
@@ -812,6 +960,12 @@ local I18N = {
         Master = "总攻击", AttackPlayers = "攻击玩家", AttackZombies = "攻击僵尸",
         TeamCheck = "跳过队友", WallCheck = "墙壁检测",
         AdvancedUI = "战术锁定框", LockBeforeFire = "先锁后打",
+
+        RepairMaster = "自动修复", RepairOnlyMine = "只修自己的",
+        RepairOnlyDamaged = "只修受损", RepairAutoEquip = "自动装锤子",
+        RepairUnknown = "无血也修(新建筑)", RepairUnknownCap = "无血重试上限",
+        RepairIntv = "间隔×0.01s", RepairThr = "受损阈值%",
+        RepairMode = "参数模式", RepairDist = "最大距离",
     }
 }
 local currentLang = "cn"
@@ -941,6 +1095,7 @@ end
 
 local uiRefreshers = {}
 local statusLabel = nil
+local repairStatusLabel = nil
 local minF
 
 local Nanoka = Instance.new("ScreenGui")
@@ -1082,7 +1237,6 @@ local function createMYQButton(text, parent, onClick, radiusPx, maskTop)
     b.Active = true
     b.ZIndex = 5
     if radiusPx > 0 then Instance.new("UICorner", b).CornerRadius = UDim.new(0, radiusPx) end
-
     local topMask = nil
     if maskTop and radiusPx > 0 then
         topMask = Instance.new("Frame", b)
@@ -1093,7 +1247,6 @@ local function createMYQButton(text, parent, onClick, radiusPx, maskTop)
         topMask.ZIndex = 6
         topMask.Active = false
     end
-
     local lbl = Instance.new("TextLabel")
     lbl.Parent = b
     lbl.Size = UDim2.new(1, 0, 1, 0)
@@ -1110,7 +1263,6 @@ local function createMYQButton(text, parent, onClick, radiusPx, maskTop)
     lbl.TextStrokeTransparency = 0.2
     lbl.Active = false
     lbl.ZIndex = 7
-
     local function applyColor(c)
         b.BackgroundColor3 = c
         if topMask then topMask.BackgroundColor3 = c end
@@ -1134,7 +1286,6 @@ local function createCloseGUIButton(parent, onClose)
     btn.Active = true
     btn.ZIndex = 5
     Instance.new("UICorner", btn).CornerRadius = UDim.new(0, CLOSE_BTN_CORNER)
-
     local topMask = Instance.new("Frame", btn)
     topMask.Size = UDim2.new(1, 0, 0, CLOSE_BTN_CORNER)
     topMask.Position = UDim2.new(0, 0, 0, 0)
@@ -1142,7 +1293,6 @@ local function createCloseGUIButton(parent, onClose)
     topMask.BorderSizePixel = 0
     topMask.ZIndex = 6
     topMask.Active = false
-
     local lbl = Instance.new("TextLabel", btn)
     lbl.Size = UDim2.new(1, 0, 1, 0)
     lbl.BackgroundTransparency = 1
@@ -1158,7 +1308,6 @@ local function createCloseGUIButton(parent, onClose)
     lbl.TextStrokeTransparency = 0.2
     lbl.Active = false
     lbl.ZIndex = 7
-
     local function applyColor(c) btn.BackgroundColor3 = c; topMask.BackgroundColor3 = c end
     btn.MouseEnter:Connect(function() applyColor(MYQ.Hover) end)
     btn.MouseLeave:Connect(function() applyColor(MYQ.Btn) end)
@@ -1257,13 +1406,13 @@ local function CreateSlider(text, parent, featureKey, minVal, maxVal, callback)
 
     clickCatcher.MouseButton1Down:Connect(function()
         dragging = true
-        updateFromScreenX(UIS2:GetMouseLocation().X)
+        updateFromScreenX(UIS:GetMouseLocation().X)
     end)
     UIS.InputChanged:Connect(function(input)
         if not dragging then return end
         if input.UserInputType == Enum.UserInputType.MouseMovement
         or input.UserInputType == Enum.UserInputType.Touch then
-            updateFromScreenX(UIS2:GetMouseLocation().X)
+            updateFromScreenX(UIS:GetMouseLocation().X)
         end
     end)
     UIS.InputEnded:Connect(function(input)
@@ -1552,7 +1701,7 @@ local function CreatePanel(titleText, list)
             lbl.Font = Enum.Font.Gotham
             lbl.TextSize = CFG0.Font.Main
             lbl.TextXAlignment = Enum.TextXAlignment.Center
-            statusLabel = lbl
+            if item.Key == "Repair" then repairStatusLabel = lbl else statusLabel = lbl end
         else
             CreateCFGToggle(item, content, item)
         end
@@ -1662,6 +1811,13 @@ local function CreatePanel(titleText, list)
     return f
 end
 
+-- AutoRepair 滑块初值（从 CFG 持久化）
+S.Features.RepairInterval   = CFG.RepairInterval
+S.Features.RepairThreshold  = CFG.RepairThreshold
+S.Features.RepairMode       = CFG.RepairMode
+S.Features.RepairMaxDist    = CFG.RepairMaxDist
+S.Features.RepairUnknownCap = CFG.RepairUnknownCap
+
 CreatePanel("AutoShoot", {
     "Master",
     "AttackPlayers",
@@ -1676,6 +1832,20 @@ CreatePanel("AutoShoot", {
         elseif toclipboard then toclipboard(COPY_UID_TEXT)
         elseif set_clipboard then set_clipboard(COPY_UID_TEXT) end
     end},
+})
+
+CreatePanel("AutoRepair", {
+    "RepairMaster",
+    "RepairOnlyMine",
+    "RepairOnlyDamaged",
+    "RepairAutoEquip",
+    "RepairUnknown",
+    {Type="Slider", Text="RepairIntv",     Key="RepairInterval",    Min=10,  Max=150, Callback=function(v) CFG.RepairInterval = v end},
+    {Type="Slider", Text="RepairThr",      Key="RepairThreshold",   Min=50,  Max=100, Callback=function(v) CFG.RepairThreshold = v end},
+    {Type="Slider", Text="RepairMode",     Key="RepairMode",        Min=1,   Max=3,   Callback=function(v) CFG.RepairMode = v end},
+    {Type="Slider", Text="RepairDist",     Key="RepairMaxDist",     Min=0,   Max=300, Callback=function(v) CFG.RepairMaxDist = v end},
+    {Type="Slider", Text="RepairUnknownCap", Key="RepairUnknownCap", Min=1,  Max=30,  Callback=function(v) CFG.RepairUnknownCap = v; REPAIR.tries = {} end},
+    {Type="Status", Key="Repair"},
 })
 
 CreatePanel("Misc", {
@@ -1713,6 +1883,18 @@ task.spawn(function()
                 statusLabel.Text = "目标 " .. tostring(statusTargets)
                     .. " · 锁定 " .. tostring(lockCount)
                     .. (CFG.Master and " · 开火中" or "")
+            end
+            if repairStatusLabel and repairStatusLabel.Parent then
+                local t = REPAIR.targets
+                if t < 0 then
+                    repairStatusLabel.Text = "未找到锤子/build"
+                else
+                    local un = REPAIR.unknown or 0
+                    repairStatusLabel.Text = "待修 " .. tostring(t)
+                        .. " · 满血跳 " .. tostring(REPAIR.skipped or 0)
+                        .. (un > 0 and (" · 新建筑 " .. tostring(un)) or "")
+                        .. (CFG.RepairMaster and " · 修复中" or "")
+                end
             end
         end)
     end
